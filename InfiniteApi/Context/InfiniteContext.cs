@@ -12,6 +12,12 @@ namespace InfiniteApi.Context
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ItemCarrinhoEntity>().HasKey(e => new {e.CarrinhoID, e.ProdutoID});
+            modelBuilder.Entity<ItemCarrinhoEntity>().HasOne<CarrinhoEntity>().WithMany(e => e.Produtos );
+        }
+
         //DataSets
 
         public DbSet<FuncionarioEntity> Funcionario { get; set; }
