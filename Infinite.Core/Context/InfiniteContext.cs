@@ -1,8 +1,8 @@
-﻿using InfiniteApi.Entities;
+﻿using Infinite.Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace InfiniteApi.Context
+namespace Infinite.Core.Context
 {
     public class InfiniteContext : DbContext
     {
@@ -14,11 +14,12 @@ namespace InfiniteApi.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ItemCarrinhoEntity>().HasKey(e => new {e.CarrinhoID, e.ProdutoID});
+            modelBuilder.Entity<ItemCarrinhoEntity>()
+                .HasKey(e => new {e.CarrinhoID, e.ProdutoID});
             modelBuilder.Entity<ItemCarrinhoEntity>()
                 .HasOne<CarrinhoEntity>()
-                .WithMany(e => e.Produtos)
-                .HasForeignKey(x => x.CarrinhoID);
+                .WithMany(g => g.Produtos)
+                .HasForeignKey(s => s.CarrinhoID);
         }
 
         //DataSets
@@ -34,7 +35,6 @@ namespace InfiniteApi.Context
         public DbSet<JogoEntity> Jogo { get; set; }
         public DbSet<MaquinaEntity> Maquina { get; set; }
         public DbSet<AgendamentoEntity> Agendamento { get; set; }
-
         public DbSet<CategoriaEntity> Categoria { get; set; }
         public DbSet<ProdutoEntity> Produto{ get; set; }
         public DbSet<ItemCarrinhoEntity> ItemCarrinho{ get; set; }

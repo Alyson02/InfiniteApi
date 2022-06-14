@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-namespace InfiniteApi.Entities
+namespace Infinite.Core.Domain.Entities
 {
     public class CarrinhoEntity
     {
@@ -11,6 +11,6 @@ namespace InfiniteApi.Entities
         // Chave entrangeira
         public int ClienteId { get; set; }
         public virtual ClienteEntity Cliente { get; set; }
-        public virtual List<ItemCarrinhoEntity> Produtos { get; set; }
+        public virtual ICollection<ItemCarrinhoEntity> Produtos { get; set; }
     }
 }
