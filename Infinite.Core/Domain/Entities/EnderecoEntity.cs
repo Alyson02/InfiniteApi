@@ -15,6 +15,6 @@ namespace Infinite.Core.Domain.Entities
         [MaxLength(50)]
         public string Apedido { get; set; }
         [MaxLength(20)]
-        public string statusEnd { get; set; }
+        public string NomeRua { get; set; }
     }
 }
