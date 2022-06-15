@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infinite.Core.Domain.Entities
 {
     public class CartaoEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CardId { get; set; }
         [MaxLength(16)]
         public string NumCard { get; set; }
@@ -14,9 +16,5 @@ namespace Infinite.Core.Domain.Entities
         public string Badeira { get; set; }
         [MaxLength (50)]
         public string ApelidoCard { get; set; }
-
-        // Chave entrangeira
-        public int ClienteId { get; set; }
-        public virtual ClienteEntity Cliente { get; set; }
     }
 }

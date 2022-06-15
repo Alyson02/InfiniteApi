@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infinite.Core.Domain.Entities
 {
@@ -7,6 +8,7 @@ namespace Infinite.Core.Domain.Entities
     {
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AgendamentoId { get; set; }
         public DateTime Horario { get; set; }
         public int Pontos { get; set; }

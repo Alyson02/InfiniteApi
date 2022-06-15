@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infinite.Core.Domain.Entities
 {
@@ -7,6 +8,7 @@ namespace Infinite.Core.Domain.Entities
 
         // Falta criar a tabela de cliente para adicionar o endereço e o codigo do funcionario
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CompraId { get; set; }
         public double Total { get; set; }
         public double Desconto { get; set; }

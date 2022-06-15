@@ -1,128 +1,171 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using MySql.EntityFrameworkCore.Metadata;
 
-namespace InfiniteApi.Migrations
+#nullable disable
+
+namespace Infinite.Core.Migrations
 {
-    public partial class Entidades : Migration
+    public partial class TodasEntidades : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Tipo",
-                table: "Cupom",
-                type: "varchar(20)",
-                maxLength: 20,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "text",
-                oldNullable: true);
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Cartao",
+                columns: table => new
+                {
+                    CardId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    NumCard = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CodigoSeg = table.Column<string>(type: "varchar(3)", maxLength: 3, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Badeira = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ApelidoCard = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cartao", x => x.CardId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Categoria",
                 columns: table => new
                 {
                     CategoriaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Categoria = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categoria", x => x.CategoriaId);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Cliente",
                 columns: table => new
                 {
                     ClienteId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    Tell = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: true),
-                    Senha = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: true),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    Pontos = table.Column<int>(type: "int", nullable: false),
-                    CardId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Tell = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Senha = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Pontos = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cliente", x => x.ClienteId);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Cupom",
+                columns: table => new
+                {
+                    CupomId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Tipo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Quantidade = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cupom", x => x.CupomId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Endereco",
+                columns: table => new
+                {
+                    EndId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CEP = table.Column<string>(type: "varchar(9)", maxLength: 9, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NumCasa = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Apedido = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    statusEnd = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Endereco", x => x.EndId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "FormaPag",
                 columns: table => new
                 {
                     FrmId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Frm = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FormaPag", x => x.FrmId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Funcionario",
-                columns: table => new
-                {
-                    FuncionarioId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
-                    Telefone = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: true),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    Senha = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: true),
-                    CupomId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Funcionario", x => x.FuncionarioId);
-                    table.ForeignKey(
-                        name: "FK_Funcionario_Cupom_CupomId",
-                        column: x => x.CupomId,
-                        principalTable: "Cupom",
-                        principalColumn: "CupomId",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Jogo",
                 columns: table => new
                 {
                     JogoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Nome = table.Column<string>(type: "text", nullable: true),
-                    Descrição = table.Column<string>(type: "text", nullable: true),
+                    Nome = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Descrição = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     PontoPreco = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Jogo", x => x.JogoId);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Maquina",
                 columns: table => new
                 {
                     MaquinaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Inicio = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Termino = table.Column<DateTime>(type: "datetime", nullable: false)
+                    Inicio = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Termino = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Maquina", x => x.MaquinaId);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Produto",
                 columns: table => new
                 {
                     ProdutoID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Estoque = table.Column<int>(type: "int", nullable: false),
                     Preco = table.Column<double>(type: "double", nullable: false),
                     Pontos = table.Column<int>(type: "int", nullable: false),
@@ -136,16 +179,16 @@ namespace InfiniteApi.Migrations
                         name: "FK_Produto_Categoria_CupomCategoriaId",
                         column: x => x.CupomCategoriaId,
                         principalTable: "Categoria",
-                        principalColumn: "CategoriaId",
-                        onDelete: ReferentialAction.Restrict);
-                });
+                        principalColumn: "CategoriaId");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Carrinho",
                 columns: table => new
                 {
                     CarrinhoID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     StatusCar = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ClienteId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -158,61 +201,95 @@ namespace InfiniteApi.Migrations
                         principalTable: "Cliente",
                         principalColumn: "ClienteId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Cartao",
+                name: "CartaoCliente",
                 columns: table => new
                 {
-                    CardId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    NumCard = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: true),
-                    CodigoSeg = table.Column<string>(type: "varchar(3)", maxLength: 3, nullable: true),
-                    Badeira = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    ApelidoCard = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    ClienteId = table.Column<int>(type: "int", nullable: false)
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    CartaoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cartao", x => x.CardId);
+                    table.PrimaryKey("PK_CartaoCliente", x => new { x.ClienteId, x.CartaoId });
                     table.ForeignKey(
-                        name: "FK_Cartao_Cliente_ClienteId",
+                        name: "FK_CartaoCliente_Cartao_CartaoId",
+                        column: x => x.CartaoId,
+                        principalTable: "Cartao",
+                        principalColumn: "CardId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartaoCliente_Cliente_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Cliente",
                         principalColumn: "ClienteId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Endereco",
+                name: "Funcionario",
                 columns: table => new
                 {
-                    EndId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    CEP = table.Column<string>(type: "varchar(9)", maxLength: 9, nullable: true),
-                    NumCasa = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
-                    Apedido = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
-                    statusEnd = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
-                    ClienteId = table.Column<int>(type: "int", nullable: false)
+                    FuncionarioId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Telefone = table.Column<string>(type: "varchar(14)", maxLength: 14, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Senha = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CupomId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Endereco", x => x.EndId);
+                    table.PrimaryKey("PK_Funcionario", x => x.FuncionarioId);
                     table.ForeignKey(
-                        name: "FK_Endereco_Cliente_ClienteId",
+                        name: "FK_Funcionario_Cupom_CupomId",
+                        column: x => x.CupomId,
+                        principalTable: "Cupom",
+                        principalColumn: "CupomId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "EnderecoCliente",
+                columns: table => new
+                {
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    EnderecoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EnderecoCliente", x => new { x.ClienteId, x.EnderecoId });
+                    table.ForeignKey(
+                        name: "FK_EnderecoCliente_Cliente_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Cliente",
                         principalColumn: "ClienteId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                    table.ForeignKey(
+                        name: "FK_EnderecoCliente_Endereco_EnderecoId",
+                        column: x => x.EnderecoId,
+                        principalTable: "Endereco",
+                        principalColumn: "EndId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Pagamento",
                 columns: table => new
                 {
                     PagamentoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Dados = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Dados = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     FrmID = table.Column<int>(type: "int", nullable: false),
                     FormaPagFrmId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -223,17 +300,17 @@ namespace InfiniteApi.Migrations
                         name: "FK_Pagamento_FormaPag_FormaPagFrmId",
                         column: x => x.FormaPagFrmId,
                         principalTable: "FormaPag",
-                        principalColumn: "FrmId",
-                        onDelete: ReferentialAction.Restrict);
-                });
+                        principalColumn: "FrmId");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Agendamento",
                 columns: table => new
                 {
                     AgendamentoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Horario = table.Column<DateTime>(type: "datetime", nullable: false),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Horario = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Pontos = table.Column<int>(type: "int", nullable: false),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     JogoId = table.Column<int>(type: "int", nullable: false),
@@ -260,7 +337,8 @@ namespace InfiniteApi.Migrations
                         principalTable: "Maquina",
                         principalColumn: "MaquinaId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "ItemCarrinho",
@@ -287,14 +365,15 @@ namespace InfiniteApi.Migrations
                         principalTable: "Produto",
                         principalColumn: "ProdutoID",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Compra",
                 columns: table => new
                 {
                     CompraId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Total = table.Column<double>(type: "double", nullable: false),
                     Desconto = table.Column<double>(type: "double", nullable: false),
                     Pontos = table.Column<double>(type: "double", nullable: false),
@@ -312,8 +391,7 @@ namespace InfiniteApi.Migrations
                         name: "FK_Compra_Cartao_CartaoCardId",
                         column: x => x.CartaoCardId,
                         principalTable: "Cartao",
-                        principalColumn: "CardId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "CardId");
                     table.ForeignKey(
                         name: "FK_Compra_Cupom_CupomId",
                         column: x => x.CupomId,
@@ -324,15 +402,15 @@ namespace InfiniteApi.Migrations
                         name: "FK_Compra_Endereco_EnderecoEndId",
                         column: x => x.EnderecoEndId,
                         principalTable: "Endereco",
-                        principalColumn: "EndId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "EndId");
                     table.ForeignKey(
                         name: "FK_Compra_Pagamento_PagamentoId",
                         column: x => x.PagamentoId,
                         principalTable: "Pagamento",
                         principalColumn: "PagamentoId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Agendamento_ClienteId",
@@ -355,10 +433,9 @@ namespace InfiniteApi.Migrations
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cartao_ClienteId",
-                table: "Cartao",
-                column: "ClienteId",
-                unique: true);
+                name: "IX_CartaoCliente_CartaoId",
+                table: "CartaoCliente",
+                column: "CartaoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Compra_CartaoCardId",
@@ -381,9 +458,9 @@ namespace InfiniteApi.Migrations
                 column: "PagamentoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Endereco_ClienteId",
-                table: "Endereco",
-                column: "ClienteId");
+                name: "IX_EnderecoCliente_EnderecoId",
+                table: "EnderecoCliente",
+                column: "EnderecoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Funcionario_CupomId",
@@ -412,7 +489,13 @@ namespace InfiniteApi.Migrations
                 name: "Agendamento");
 
             migrationBuilder.DropTable(
+                name: "CartaoCliente");
+
+            migrationBuilder.DropTable(
                 name: "Compra");
+
+            migrationBuilder.DropTable(
+                name: "EnderecoCliente");
 
             migrationBuilder.DropTable(
                 name: "Funcionario");
@@ -430,10 +513,13 @@ namespace InfiniteApi.Migrations
                 name: "Cartao");
 
             migrationBuilder.DropTable(
+                name: "Pagamento");
+
+            migrationBuilder.DropTable(
                 name: "Endereco");
 
             migrationBuilder.DropTable(
-                name: "Pagamento");
+                name: "Cupom");
 
             migrationBuilder.DropTable(
                 name: "Carrinho");
@@ -449,16 +535,6 @@ namespace InfiniteApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categoria");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Tipo",
-                table: "Cupom",
-                type: "text",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(20)",
-                oldMaxLength: 20,
-                oldNullable: true);
         }
     }
 }

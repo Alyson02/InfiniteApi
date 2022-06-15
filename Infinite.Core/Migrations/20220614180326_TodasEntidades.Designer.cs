@@ -6,18 +6,20 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace InfiniteApi.Migrations
+#nullable disable
+
+namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    [Migration("20220613220755_Entidades")]
-    partial class Entidades
+    [Migration("20220614180326_TodasEntidades")]
+    partial class TodasEntidades
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.AgendamentoEntity", b =>
                 {
@@ -29,7 +31,7 @@ namespace InfiniteApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Horario")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("JogoId")
                         .HasColumnType("int");
@@ -70,6 +72,21 @@ namespace InfiniteApi.Migrations
                     b.ToTable("Carrinho");
                 });
 
+            modelBuilder.Entity("Infinite.Core.Domain.Entities.CartaoClienteEntity", b =>
+                {
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CartaoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClienteId", "CartaoId");
+
+                    b.HasIndex("CartaoId");
+
+                    b.ToTable("CartaoCliente");
+                });
+
             modelBuilder.Entity("Infinite.Core.Domain.Entities.CartaoEntity", b =>
                 {
                     b.Property<int>("CardId")
@@ -84,9 +101,6 @@ namespace InfiniteApi.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CodigoSeg")
                         .HasMaxLength(3)
                         .HasColumnType("varchar(3)");
@@ -96,9 +110,6 @@ namespace InfiniteApi.Migrations
                         .HasColumnType("varchar(16)");
 
                     b.HasKey("CardId");
-
-                    b.HasIndex("ClienteId")
-                        .IsUnique();
 
                     b.ToTable("Cartao");
                 });
@@ -122,9 +133,6 @@ namespace InfiniteApi.Migrations
                 {
                     b.Property<int>("ClienteId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("CardId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -215,6 +223,21 @@ namespace InfiniteApi.Migrations
                     b.ToTable("Cupom");
                 });
 
+            modelBuilder.Entity("Infinite.Core.Domain.Entities.EnderecoClienteEntity", b =>
+                {
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EnderecoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClienteId", "EnderecoId");
+
+                    b.HasIndex("EnderecoId");
+
+                    b.ToTable("EnderecoCliente");
+                });
+
             modelBuilder.Entity("Infinite.Core.Domain.Entities.EnderecoEntity", b =>
                 {
                     b.Property<int>("EndId")
@@ -229,9 +252,6 @@ namespace InfiniteApi.Migrations
                         .HasMaxLength(9)
                         .HasColumnType("varchar(9)");
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NumCasa")
                         .HasMaxLength(10)
                         .HasColumnType("varchar(10)");
@@ -241,8 +261,6 @@ namespace InfiniteApi.Migrations
                         .HasColumnType("varchar(20)");
 
                     b.HasKey("EndId");
-
-                    b.HasIndex("ClienteId");
 
                     b.ToTable("Endereco");
                 });
@@ -325,10 +343,10 @@ namespace InfiniteApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Descrição")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("PontoPreco")
                         .HasColumnType("int");
@@ -348,13 +366,13 @@ namespace InfiniteApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Inicio")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime>("Termino")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("MaquinaId");
 
@@ -454,15 +472,21 @@ namespace InfiniteApi.Migrations
                     b.Navigation("Cliente");
                 });
 
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.CartaoEntity", b =>
+            modelBuilder.Entity("Infinite.Core.Domain.Entities.CartaoClienteEntity", b =>
                 {
-                    b.HasOne("Infinite.Core.Domain.Entities.ClienteEntity", "Cliente")
-                        .WithOne("Cartao")
-                        .HasForeignKey("Infinite.Core.Domain.Entities.CartaoEntity", "ClienteId")
+                    b.HasOne("Infinite.Core.Domain.Entities.CartaoEntity", "Cartao")
+                        .WithMany()
+                        .HasForeignKey("CartaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cliente");
+                    b.HasOne("Infinite.Core.Domain.Entities.ClienteEntity", null)
+                        .WithMany("Cartoes")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cartao");
                 });
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.CompraEntity", b =>
@@ -496,15 +520,21 @@ namespace InfiniteApi.Migrations
                     b.Navigation("Pagamento");
                 });
 
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.EnderecoEntity", b =>
+            modelBuilder.Entity("Infinite.Core.Domain.Entities.EnderecoClienteEntity", b =>
                 {
-                    b.HasOne("Infinite.Core.Domain.Entities.ClienteEntity", "Cliente")
-                        .WithMany()
+                    b.HasOne("Infinite.Core.Domain.Entities.ClienteEntity", null)
+                        .WithMany("Enderecos")
                         .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cliente");
+                    b.HasOne("Infinite.Core.Domain.Entities.EnderecoEntity", "Endereco")
+                        .WithMany()
+                        .HasForeignKey("EnderecoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Endereco");
                 });
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.FuncionarioEntity", b =>
@@ -560,7 +590,9 @@ namespace InfiniteApi.Migrations
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.ClienteEntity", b =>
                 {
-                    b.Navigation("Cartao");
+                    b.Navigation("Cartoes");
+
+                    b.Navigation("Enderecos");
                 });
 #pragma warning restore 612, 618
         }

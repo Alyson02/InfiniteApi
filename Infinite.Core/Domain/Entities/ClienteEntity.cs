@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infinite.Core.Domain.Entities
 {
     public class ClienteEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClienteId { get; set; }
         [MaxLength(100)]
 
@@ -19,9 +22,8 @@ namespace Infinite.Core.Domain.Entities
         public string Email { get; set; }
         public int Pontos {get; set; }
 
-        // Chave entrangeira
-        public int CardId { get; set; }
-        public virtual CartaoEntity Cartao { get; set; }
+        public ICollection<CartaoClienteEntity> Cartoes { get; set; }
+        public ICollection<EnderecoClienteEntity> Enderecos { get; set; }
 
     }
 }

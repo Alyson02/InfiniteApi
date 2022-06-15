@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Infinite.Core.Domain.Entities
 {
     public class FuncionarioEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FuncionarioId { get; set; }
         [MaxLength(150)]
         public string Nome { get; set; }

@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -23,7 +24,17 @@ namespace Infinite.Core.Infrastructure
     {
         public static IServiceCollection AddInfiniteDbContext(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<InfiniteContext>(opts => opts.UseMySQL(connectionString));
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
+
+            services.AddDbContext<InfiniteContext>(
+                dbContextOptions => dbContextOptions
+                    .UseMySql(connectionString, serverVersion)
+                    // The following three options help with debugging, but should
+                    // be changed or removed for production.
+                    .LogTo(Console.WriteLine, LogLevel.Information)
+                    .EnableSensitiveDataLogging()
+                    .EnableDetailedErrors()
+            );
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IServiceBase<>), typeof(ServiceBase<>));

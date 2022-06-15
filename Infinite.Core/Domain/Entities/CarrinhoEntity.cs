@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Infinite.Core.Domain.Entities
 {
     public class CarrinhoEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CarrinhoID { get; set; }
         public bool StatusCar { get; set; }
 

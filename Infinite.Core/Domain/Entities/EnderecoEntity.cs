@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infinite.Core.Domain.Entities
 {
     public class EnderecoEntity
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int EndId { get; set; }
         [MaxLength(9)]
         public string CEP { get; set; }
@@ -14,8 +16,5 @@ namespace Infinite.Core.Domain.Entities
         public string Apedido { get; set; }
         [MaxLength(20)]
         public string statusEnd { get; set; }
-        // Chave entrangeira
-        public int ClienteId { get; set; }
-        public virtual ClienteEntity Cliente { get; set; }
     }
 }

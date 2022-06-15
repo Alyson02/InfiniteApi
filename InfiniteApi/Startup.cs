@@ -42,8 +42,6 @@ namespace InfiniteApi
                       });
             });
 
-            //services.AddDbContext<InfiniteContext>(opts => opts.UseMySQL(Configuration.GetConnectionString("Connection")));
-
             services.AddControllers();
 
             services
