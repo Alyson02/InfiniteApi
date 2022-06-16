@@ -38,7 +38,7 @@ namespace Infinite.Core.Business.CQRS.Cartao.Queries//colocar o namespace corret
                 }
                 catch (Exception e)
                 {
-                    throw new AppException("Erro ao fazer a atualização dos dados do cartão", e);
+                    throw new AppException("Erro ao fazer a consulta do cartão", e);
                 }
             }
         }

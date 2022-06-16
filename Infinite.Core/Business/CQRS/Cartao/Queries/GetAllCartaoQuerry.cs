@@ -35,7 +35,7 @@ namespace Infinite.Core.Business.CQRS.Cartao.Queries
                         Badeira = x.Badeira,
                         CardId = x.CardId,
                         NumCard = x.NumCard
-                    }); ;
+                    });
 
                     return new Response(model);
                 }

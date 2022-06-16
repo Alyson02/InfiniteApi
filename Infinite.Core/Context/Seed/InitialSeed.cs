@@ -19,7 +19,5 @@ namespace Infinite.Core.Context.Seed
                 new CategoriaEntity{ Categoria = "Computadores" },
             };
 
-        public static IEnumerable<>
-
     }
 }
