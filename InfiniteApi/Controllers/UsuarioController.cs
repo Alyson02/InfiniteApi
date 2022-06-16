@@ -16,7 +16,7 @@ namespace Infinite.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] UsuarioLoginCommand command)
         {
             return Ok(await _mediator.Send(command));
