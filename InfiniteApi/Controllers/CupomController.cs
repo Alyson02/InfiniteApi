@@ -12,7 +12,6 @@ namespace Infinite.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class CupomController : ControllerBase
     {
         private IMediator _mediator;

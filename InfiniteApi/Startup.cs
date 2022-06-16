@@ -4,6 +4,7 @@ using Infinite.Core.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfiniteApi
+namespace Infinite.Api
 {
     public class Startup
     {
@@ -46,12 +47,6 @@ namespace InfiniteApi
                       });
             });
 
-            services.AddControllers();
-
-            services
-                .AddInfiniteDbContext(Configuration.GetConnectionString("Connection"))
-                .AddMediator();
-
             //Autenticação
 
             var key = Encoding.ASCII.GetBytes(Configuration["JWT:Key"]);
@@ -72,6 +67,17 @@ namespace InfiniteApi
                     ValidateAudience = false
                 };
             });
+
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            services.AddSignalR();
+            services.AddAuthorization();
+
+            services
+                .AddInfiniteDbContext(Configuration.GetConnectionString("Connection"))
+                .AddMediator();
+
 
             services.AddSwaggerGen(c =>
             {
@@ -106,6 +112,10 @@ namespace InfiniteApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHttpsRedirection();
+            }
 
             app.UseSwagger();
             app.UseSwaggerUI(c => {
@@ -113,13 +123,17 @@ namespace InfiniteApi
                 c.DefaultModelExpandDepth(-1);
             });
 
+            app.UseRouting();
             app.UseCors("AllowAllHeaders");
 
-            app.UseHttpsRedirection();
 
             app.AddErrorMiddleware();
 
-            app.UseRouting();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+                ForwardedHeaders.XForwardedProto
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
