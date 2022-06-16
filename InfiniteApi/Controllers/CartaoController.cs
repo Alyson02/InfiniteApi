@@ -27,7 +27,7 @@ namespace Infinite.Api.Controllers
             return Ok(await _mediator.Send(new GetAllCartaoQuerry()));
         }
         [HttpGet("{idCartao}")]
-        public async Task<IActionResult> GetAll([FromRoute] int idCartao)
+        public async Task<IActionResult> GetById([FromRoute] int idCartao)
         {
             return Ok(await _mediator.Send(new GetByIdCartaoQuerry { CardId = idCartao}));
         }

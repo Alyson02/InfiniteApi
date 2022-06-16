@@ -16,14 +16,10 @@ namespace Infinite.Core.Business.CQRS.Cliente.Commands
     public class CreateClienteCommand : IRequest<Response>
     {
         //Props
-        public int Pontos { get; set; }
         public string Nome { get; set; }
         public string Tell { get; set; }
         public string Senha { get; set; }
         public string Email { get; set; }
-        public int UsuarioId { get; set; }
-
-
 
         public class CreateClienteCommandHandler : IRequestHandler<CreateClienteCommand, Response>
         {

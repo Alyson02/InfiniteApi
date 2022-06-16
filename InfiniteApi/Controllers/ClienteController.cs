@@ -26,9 +26,10 @@ namespace Infinite.Api.Controllers
             return Ok(await _mediator.Send(new GetAllClienteQuerry()));
         }
         [HttpGet("{idCliente}")]
-        public async Task<IActionResult> GetAll([FromRoute] int idCliente)
+        public async Task<IActionResult> GetById([FromRoute] int idCliente)
         {
-            return Ok(await _mediator.Send(new GetAllClienteQuerry()));
+
+            return Ok(await _mediator.Send(new GetByIdClienteQuerry { ClienteId = idCliente}));
         }
 
 
