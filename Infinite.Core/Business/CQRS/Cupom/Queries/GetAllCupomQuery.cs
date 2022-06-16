@@ -14,6 +14,7 @@ namespace Infinite.Core.Business.CQRS.Cupom.Queries
 {
     public class GetAllCupomQuery : IRequest<Response>
     {
+        public int UsuarioId { get; set; }
         public class GetAllCupomQueryHandler : IRequestHandler<GetAllCupomQuery, Response>
         {
             private IServiceBase<CupomEntity> _service;
@@ -27,6 +28,7 @@ namespace Infinite.Core.Business.CQRS.Cupom.Queries
             {
                 try
                 {
+                    var spec = _service.CreateSpec();
                     var cupoms = await _service.ListAsync(cancellationToken);
                     return new Response(cupoms);
                 }

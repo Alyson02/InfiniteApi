@@ -19,6 +19,8 @@ namespace Infinite.Core.Domain.Entities
         //chaves estrangeiras
         public int CupomId { get; set; }
         public virtual CupomEntity Cupom { get; set; }
+        public int UsuarioId { get; set; }
+        public UsuarioEntity Usuario { get; set; }
 
     }
 }

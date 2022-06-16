@@ -3,6 +3,7 @@ using System;
 using Infinite.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    partial class InfiniteContextModelSnapshot : ModelSnapshot
+    [Migration("20220616010605_Usuario")]
+    partial class Usuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -275,8 +277,8 @@ namespace Infinite.Core.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Frm")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
 
                     b.HasKey("FrmId");
 
@@ -459,18 +461,21 @@ namespace Infinite.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Password")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("TipoUsuarioId")
+                    b.Property<string>("TipoUsuarioId")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("TipoUsuarioId1")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("longtext");
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("TipoUsuarioId");
+                    b.HasIndex("TipoUsuarioId1");
 
                     b.ToTable("Usuario");
                 });
@@ -649,9 +654,7 @@ namespace Infinite.Core.Migrations
                 {
                     b.HasOne("Infinite.Core.Domain.Entities.TipoUsuarioEntity", "TipoUsuario")
                         .WithMany()
-                        .HasForeignKey("TipoUsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TipoUsuarioId1");
 
                     b.Navigation("TipoUsuario");
                 });

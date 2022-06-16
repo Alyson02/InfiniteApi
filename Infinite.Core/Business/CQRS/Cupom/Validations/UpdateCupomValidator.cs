@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Infinite.Core.Business.CQRS.Cupom.Validations
 {
-    public class CreateCupomValidation : AbstractValidator<CreateCupomCommand>
+    public class UpdateCupomValidator : AbstractValidator<UpdateCupomCommand>
     {
-        public CreateCupomValidation()
+        public UpdateCupomValidator()
         {
             RuleFor(x => x.Tipo)
                 .NotEmpty()

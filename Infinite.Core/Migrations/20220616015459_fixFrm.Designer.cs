@@ -3,6 +3,7 @@ using System;
 using Infinite.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    partial class InfiniteContextModelSnapshot : ModelSnapshot
+    [Migration("20220616015459_fixFrm")]
+    partial class fixFrm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -459,14 +461,14 @@ namespace Infinite.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Password")
                         .HasColumnType("longtext");
 
                     b.Property<int>("TipoUsuarioId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("longtext");
 
                     b.HasKey("UserId");
 

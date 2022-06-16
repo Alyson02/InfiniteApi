@@ -3,6 +3,7 @@ using System;
 using Infinite.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    partial class InfiniteContextModelSnapshot : ModelSnapshot
+    [Migration("20220616002213_fix")]
+    partial class fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,12 +154,7 @@ namespace Infinite.Core.Migrations
                         .HasMaxLength(14)
                         .HasColumnType("varchar(14)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
                     b.HasKey("ClienteId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Cliente");
                 });
@@ -275,8 +272,8 @@ namespace Infinite.Core.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Frm")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
 
                     b.HasKey("FrmId");
 
@@ -308,14 +305,9 @@ namespace Infinite.Core.Migrations
                         .HasMaxLength(14)
                         .HasColumnType("varchar(14)");
 
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
-
                     b.HasKey("FuncionarioId");
 
                     b.HasIndex("CupomId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Funcionario");
                 });
@@ -439,42 +431,6 @@ namespace Infinite.Core.Migrations
                     b.ToTable("Produto");
                 });
 
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.TipoUsuarioEntity", b =>
-                {
-                    b.Property<int>("TipoUsuarioId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("TipoUsuarioId");
-
-                    b.ToTable("TipoUsuario");
-                });
-
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.UsuarioEntity", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("TipoUsuarioId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId");
-
-                    b.HasIndex("TipoUsuarioId");
-
-                    b.ToTable("Usuario");
-                });
-
             modelBuilder.Entity("Infinite.Core.Domain.Entities.AgendamentoEntity", b =>
                 {
                     b.HasOne("Infinite.Core.Domain.Entities.ClienteEntity", "Cliente")
@@ -528,17 +484,6 @@ namespace Infinite.Core.Migrations
                         .IsRequired();
 
                     b.Navigation("Cartao");
-                });
-
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.ClienteEntity", b =>
-                {
-                    b.HasOne("Infinite.Core.Domain.Entities.UsuarioEntity", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.CompraEntity", b =>
@@ -597,15 +542,7 @@ namespace Infinite.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Infinite.Core.Domain.Entities.UsuarioEntity", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Cupom");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.ItemCarrinhoEntity", b =>
@@ -643,17 +580,6 @@ namespace Infinite.Core.Migrations
                         .IsRequired();
 
                     b.Navigation("Categoria");
-                });
-
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.UsuarioEntity", b =>
-                {
-                    b.HasOne("Infinite.Core.Domain.Entities.TipoUsuarioEntity", "TipoUsuario")
-                        .WithMany()
-                        .HasForeignKey("TipoUsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TipoUsuario");
                 });
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.CarrinhoEntity", b =>
