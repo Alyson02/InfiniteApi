@@ -68,6 +68,8 @@ namespace InfiniteApi
                 app.UseHttpsRedirection();
             }
 
+            app.UseCors("AllowAllHeaders");
+
             app.UseHttpsRedirection();
 
             app.AddErrorMiddleware();
