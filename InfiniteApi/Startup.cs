@@ -1,3 +1,4 @@
+using GRVMobile.API.Filter;
 using Infinite.Core.Context;
 using Infinite.Core.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -74,7 +75,25 @@ namespace InfiniteApi
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "InfiniteApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                { 
+                    Version = "v1", 
+                    Title = "InfiniteApi",
+                    Description = "InfiniteGames - API",
+                    Contact = new OpenApiContact { Name = "Alyson", Email = "alyson.subrim2002@gmail.com"}
+                });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "Entre com Token JWT, Ex.: Bearer {token}",
+                    Name = "Authorization",
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
         }
 
@@ -86,13 +105,13 @@ namespace InfiniteApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "InfiniteApi v1"));
             }
-            else
-            {
-                app.UseHttpsRedirection();
-            }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "InfiniteApi v1");
+                c.DefaultModelExpandDepth(-1);
+            });
 
             app.UseCors("AllowAllHeaders");
 
