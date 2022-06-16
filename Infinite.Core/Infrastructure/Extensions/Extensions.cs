@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.Features;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -59,5 +60,11 @@ namespace Infinite.Core.Infrastructure.Extensions
             digito = digito + resto.ToString();
             return cpf.EndsWith(digito);
         }
+
+        public static int GetUserId(this ClaimsPrincipal user)
+        {
+            return user.FindFirst("uid") != null ? Convert.ToInt32(user.FindFirst("uid").Value) : 0;
+        }
+
     }
 }

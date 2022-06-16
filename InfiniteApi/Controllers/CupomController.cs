@@ -1,6 +1,8 @@
 ﻿using Infinite.Core.Business.CQRS.Cupom.Commands;
 using Infinite.Core.Business.CQRS.Cupom.Queries;
+using Infinite.Core.Infrastructure.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +12,7 @@ namespace Infinite.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CupomController : ControllerBase
     {
         private IMediator _mediator;
@@ -23,7 +26,7 @@ namespace Infinite.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _mediator.Send(new GetAllCupomQuery()));
+            return Ok(await _mediator.Send(new GetAllCupomQuery() { UsuarioId = HttpContext.User.GetUserId()}));
         }
 
         [HttpGet("{cupomId}")]

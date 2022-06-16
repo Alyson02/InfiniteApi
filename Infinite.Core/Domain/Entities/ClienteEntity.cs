@@ -21,6 +21,8 @@ namespace Infinite.Core.Domain.Entities
         [MaxLength(100)]
         public string Email { get; set; }
         public int Pontos {get; set; }
+        public int UsuarioId { get; set; }
+        public UsuarioEntity Usuario { get; set; }
 
         public ICollection<CartaoClienteEntity> Cartoes { get; set; }
         public ICollection<EnderecoClienteEntity> Enderecos { get; set; }

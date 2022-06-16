@@ -1,7 +1,9 @@
 ﻿using AutoMapper.EquivalencyExpression;
 using FluentValidation;
 using Infinite.Core.Business.Services.Base;
+using Infinite.Core.Business.Services.Token;
 using Infinite.Core.Context;
+using Infinite.Core.Context.Seed;
 using Infinite.Core.Infrastructure.Middleware;
 using Infinite.Core.Infrastructure.Pipelines;
 using Infinite.Core.Infrastructure.Repository;
@@ -36,8 +38,9 @@ namespace Infinite.Core.Infrastructure
                     .EnableDetailedErrors()
             );
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IServiceBase<>), typeof(ServiceBase<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ITokenService, TokenService>();
 
             services.AddAutoMapper(cfg =>
             {
@@ -74,5 +77,76 @@ namespace Infinite.Core.Infrastructure
             app.UseMiddleware<ErrorHandlerMiddleware>();
         }
 
+        public static void RunMigration(this IApplicationBuilder app)
+        {
+            using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+
+            var context = serviceScope.ServiceProvider.GetRequiredService<InfiniteContext>();
+            context.Database.Migrate();
+
+            foreach (var entity in InitialSeed.Categoria)
+            {
+                if (!context.Categoria.Any(x => x.Categoria.Equals(entity.Categoria)))
+                {
+                    context.Categoria.Add(entity);
+                    context.SaveChanges();
+                }
+            }
+
+            foreach (var entity in InitialSeed.Cupom)
+            {
+                if (!context.Cupom.Any(x => x.Tipo.Equals(entity.Tipo)))
+                {
+                    context.Cupom.Add(entity);
+                    context.SaveChanges();
+                }
+            }
+
+            foreach (var entity in InitialSeed.Produto)
+            {
+                if (!context.Produto.Any(x => x.Nome.Equals(entity.Nome)))
+                {
+                    context.Produto.Add(entity);
+                    context.SaveChanges();
+                }
+            }
+
+            foreach (var entity in InitialSeed.FormaPag)
+            {
+                if (!context.FormaPag.Any(x => x.Frm.Equals(entity.Frm)))
+                {
+                    context.FormaPag.Add(entity);
+                    context.SaveChanges();
+                }
+            }
+
+            foreach (var entity in InitialSeed.TipoUsuario)
+            {
+                if (!context.TipoUsuario.Any(x => x.Role.Equals(entity.Role)))
+                {
+                    context.TipoUsuario.Add(entity);
+                    context.SaveChanges();
+                }
+            }
+
+            foreach (var entity in InitialSeed.Funcionario)
+            {
+                if (!context.Funcionario.Any(x => x.Nome.Equals(entity.Nome)))
+                {
+                    context.Funcionario.Add(entity);
+                    context.SaveChanges();
+                }
+            }
+
+            foreach (var entity in InitialSeed.Cliente)
+            {
+                if (!context.Cliente.Any(x => x.Nome.Equals(entity.Nome)))
+                {
+                    context.Cliente.Add(entity);
+                    context.SaveChanges();
+                }
+            }
+
+        }
     }
 }

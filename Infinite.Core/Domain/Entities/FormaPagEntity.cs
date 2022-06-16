@@ -8,7 +8,7 @@ namespace Infinite.Core.Domain.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FrmId { get; set; }
-        [MaxLength(10)]
+        [MaxLength(200)]
         public string Frm { get; set; }
     }
 }
