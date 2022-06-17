@@ -29,14 +29,15 @@ namespace Infinite.Core.Business.CQRS.Cliente.Queries//colocar o namespace corre
             {
                 try
                 {
-                    var Cliente = await this._service.ListAsync();
+                    var spec = _service.CreateSpec().AddInclude(x => x.Usuario);
+                    var Cliente = await this._service.ListAsync(spec);
 
                     var model = Cliente.Select(x => new ListClienteModel
                     {
                         ClienteId = x.ClienteId,
                         Nome = x.Nome,
                         Tell = x.Tell,
-                        Email = x.Email,
+                        Email = x.Usuario.Email
                     });
 
                     return new Response(model);

@@ -38,10 +38,13 @@ namespace Infinite.Core.Business.CQRS.Cliente.Commands
                     {
                         Nome = command.Nome,
                         Tell = command.Tell,
-                        Senha = command.Senha,
-                        Email = command.Email,
                         Pontos = 0,
-                        UsuarioId = 2 // Cliente e Sempre 2
+                        Usuario = new UsuarioEntity
+                        {
+                            Email = command.Email,
+                            Password = command.Senha,
+                            TipoUsuarioId = (int)TipoUsuarioEnum.USUARIO_SITE
+                        }
                     };
 
                     await _service.InsertAsync(cliente);

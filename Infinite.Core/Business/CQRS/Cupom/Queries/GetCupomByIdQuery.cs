@@ -14,7 +14,7 @@ namespace Infinite.Core.Business.CQRS.Cupom.Queries
 {
     public class GetCupomByIdQuery : IRequest<Response>
     {
-        public int CupomId { get; set; }
+        public string CupomId { get; set; }
         public class GetCupomByIdQueryHandler : IRequestHandler<GetCupomByIdQuery, Response>
         {
             private IServiceBase<CupomEntity> _service;

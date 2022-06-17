@@ -58,5 +58,6 @@ namespace Infinite.Core.Context
         public DbSet<CarrinhoEntity> Carrinho{ get; set; }
         public DbSet<UsuarioEntity> Usuario{ get; set; }
         public DbSet<TipoUsuarioEntity> TipoUsuario{ get; set; }
+        public DbSet<TipoCupomEntity> TipoCupom{ get; set; }
     }
 }

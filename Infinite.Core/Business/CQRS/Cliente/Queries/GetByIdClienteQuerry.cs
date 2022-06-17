@@ -29,6 +29,7 @@ namespace Infinite.Core.Business.CQRS.Cliente.Queries//colocar o namespace corre
                 try
                 {
                     var spec = this._service.CreateSpec(x => x.ClienteId == command.ClienteId);
+                    spec.AddInclude(x => x.Usuario);
 
                     var cliente = await this._service.FindAsync(spec);
 

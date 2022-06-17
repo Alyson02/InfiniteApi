@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Business\CQRS\Funcionario\Validations\" />
     <Folder Include="Business\CQRS\Produto\Validations\" />
   </ItemGroup>
 

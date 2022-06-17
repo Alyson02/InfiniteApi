@@ -1,4 +1,5 @@
 ﻿using Infinite.Core.Domain.Entities;
+using Infinite.Core.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,12 @@ namespace Infinite.Core.Context.Seed
                 new CategoriaEntity{ Categoria = "Computadores" },
             };
 
-        public static IEnumerable<CupomEntity> Cupom =>
-            new List<CupomEntity>
+        public static IEnumerable<TipoCupomEntity> TipoCupom =>
+            new List<TipoCupomEntity>
             {
-                new CupomEntity{ Tipo = "marketing" , Quantidade = 200 },
-                new CupomEntity{ Tipo = "promocional" , Quantidade = 200 },
-                new CupomEntity{ Tipo = "colaborador" , Quantidade = 200 }
+                new TipoCupomEntity{ Descricao = "Marketing"},
+                new TipoCupomEntity{ Descricao = "Promocional"},
+                new TipoCupomEntity{ Descricao = "Colaborador"}
             };
 
         public static IEnumerable<ProdutoEntity> Produto =>
@@ -109,8 +110,6 @@ namespace Infinite.Core.Context.Seed
                 new FuncionarioEntity
                 {
                     Nome = "Alyson Solador de maguinho",
-                    Email = "alyson@gmail.com",
-                    Senha = "alyson@2022",
                     Telefone = "(11)93363-8836",
                     Usuario = new UsuarioEntity
                     {
@@ -118,7 +117,11 @@ namespace Infinite.Core.Context.Seed
                         Password = "alyson@2022",
                         TipoUsuarioId = 1,
                     },
-                    CupomId = 3,
+                    Cupom = new CupomEntity
+                    {
+                        CupomId = Guid.NewGuid().ToString().Substring(0, 8),
+                        TipoCupomId = (int)TipoCupomEnum.colaborador
+                    },
                 }
             };
 
@@ -128,15 +131,13 @@ namespace Infinite.Core.Context.Seed
                 new ClienteEntity
                 {
                     Nome = "Samuel Gamer FF 10",
-                    Email = "samuel.gamerff10@gmail.com",
-                    Senha = "samuel@2022",
                     Tell = "(11)93363-8836",
                     Pontos = 0,
                     Usuario = new UsuarioEntity
                     {
                         Email = "samuel",
                         Password = "samuel@2022",
-                        TipoUsuarioId = 1,
+                        TipoUsuarioId = 2,
                     }
                 }
             };

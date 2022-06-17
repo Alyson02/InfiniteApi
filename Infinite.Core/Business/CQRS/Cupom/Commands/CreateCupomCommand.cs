@@ -15,8 +15,7 @@ namespace Infinite.Core.Business.CQRS.Cupom.Commands
 {
     public class CreateCupomCommand : IRequest<Response>
     {
-        public string Tipo { get; set; }
-        public int Quantidade { get; set; }
+        public int TipoCupomId { get; set; }
 
         public class CreateCupomCommandHandler : IRequestHandler<CreateCupomCommand, Response>
         {
@@ -34,8 +33,8 @@ namespace Infinite.Core.Business.CQRS.Cupom.Commands
                 {
                     var cupom = new CupomEntity
                     {
-                        Quantidade = command.Quantidade,
-                        Tipo = command.Tipo,
+                        CupomId = Guid.NewGuid().ToString().Substring(0, 8),
+                        TipoCupomId = command.TipoCupomId,
                     };
 
                     await _service.InsertAsync(cupom);

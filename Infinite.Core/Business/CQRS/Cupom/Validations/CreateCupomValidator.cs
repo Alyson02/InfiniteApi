@@ -12,15 +12,6 @@ namespace Infinite.Core.Business.CQRS.Cupom.Validations
     {
         public CreateCupomValidator()
         {
-            RuleFor(x => x.Tipo)
-                .NotEmpty()
-                .WithMessage("Tipo não pode ser vazio")
-                .MaximumLength(20)
-                .WithMessage("Tipo não pode passar de 20 caracteres");
-
-            RuleFor(x => x.Quantidade)
-                .NotEqual(0)
-                .WithMessage("Quantidade não pode estar vazia");
         }
     }
 }

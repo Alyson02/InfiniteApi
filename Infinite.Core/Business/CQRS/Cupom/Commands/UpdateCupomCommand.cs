@@ -15,9 +15,8 @@ namespace Infinite.Core.Business.CQRS.Cupom.Commands
 {
     public class UpdateCupomCommand : IRequest<Response>
     {
-        public int CupomId { get; set; }
-        public string Tipo { get; set; }
-        public int Quantidade { get; set; }
+        public string CupomId { get; set; }
+        public int TipoCupomId { get; set; }
 
         public class UpdateCupomCommandHandler : IRequestHandler<UpdateCupomCommand, Response>
         {
@@ -37,8 +36,7 @@ namespace Infinite.Core.Business.CQRS.Cupom.Commands
 
                     if (cupom == null) throw new Exception("Cupom não encontrado");
 
-                    cupom.Tipo = command.Tipo;
-                    cupom.Quantidade = command.Quantidade;
+                    cupom.TipoCupomId = command.TipoCupomId;
                     await _service.UpdateAsync(cupom);
 
                     return new Response("Cupom atualizado com sucesso");

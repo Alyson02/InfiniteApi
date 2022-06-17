@@ -15,7 +15,7 @@ namespace Infinite.Core.Domain.Entities
         public double Pontos { get; set; }
 
         //chaves estrangeiras
-        public int CupomId { get; set; }
+        public string CupomId { get; set; }
         public virtual CupomEntity Cupom { get; set; }
         public int PagamentoId { get; set; }
         public virtual PagamentoEntity Pagamento { get; set; }

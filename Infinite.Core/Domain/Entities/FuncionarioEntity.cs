@@ -12,12 +12,9 @@ namespace Infinite.Core.Domain.Entities
         public string Nome { get; set; }
         [MaxLength(14)]
         public string Telefone { get; set; }
-        [MaxLength(100)]
-        public string Email { get; set; }
-        [MaxLength(15)]
-        public string Senha { get; set; }
+
         //chaves estrangeiras
-        public int CupomId { get; set; }
+        public string CupomId { get; set; }
         public virtual CupomEntity Cupom { get; set; }
         public int UsuarioId { get; set; }
         public UsuarioEntity Usuario { get; set; }

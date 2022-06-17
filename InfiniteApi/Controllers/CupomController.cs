@@ -29,7 +29,7 @@ namespace Infinite.Api.Controllers
         }
 
         [HttpGet("{cupomId}")]
-        public async Task<IActionResult> Get([FromRoute] int cupomId)
+        public async Task<IActionResult> Get([FromRoute] string cupomId)
         {
             return Ok(await _mediator.Send(new GetCupomByIdQuery {CupomId = cupomId}));
         }
@@ -41,14 +41,14 @@ namespace Infinite.Api.Controllers
         }
 
         [HttpPut("{cupomId}")]
-        public async Task<IActionResult> Update([FromRoute] int cupomId ,[FromBody] UpdateCupomCommand command)
+        public async Task<IActionResult> Update([FromRoute] string cupomId ,[FromBody] UpdateCupomCommand command)
         {
             if (cupomId != command.CupomId) throw new Exception("Id do cupom deve ser o mesmo do objeto enviado");
             return Ok(await _mediator.Send(command));
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromRoute] int cupomId)
+        public async Task<IActionResult> Delete([FromRoute] string cupomId)
         {
             return Ok(await _mediator.Send(new DeleteCupomCommand { CupomId = cupomId}));
         }

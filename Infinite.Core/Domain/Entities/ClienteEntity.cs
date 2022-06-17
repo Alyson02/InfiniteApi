@@ -10,16 +10,9 @@ namespace Infinite.Core.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ClienteId { get; set; }
         [MaxLength(100)]
-
         public string Nome { get; set; }
         [MaxLength(14)]
-
         public string Tell { get; set; }
-        [MaxLength(15)]
-
-        public string Senha { get; set; }
-        [MaxLength(100)]
-        public string Email { get; set; }
         public int Pontos {get; set; }
         public int UsuarioId { get; set; }
         public UsuarioEntity Usuario { get; set; }

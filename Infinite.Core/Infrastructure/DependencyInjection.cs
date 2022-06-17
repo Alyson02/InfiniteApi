@@ -93,11 +93,11 @@ namespace Infinite.Core.Infrastructure
                 }
             }
 
-            foreach (var entity in InitialSeed.Cupom)
+            foreach (var entity in InitialSeed.TipoCupom)
             {
-                if (!context.Cupom.Any(x => x.Tipo.Equals(entity.Tipo)))
+                if (!context.TipoCupom.Any(x => x.Descricao.Equals(entity.Descricao)))
                 {
-                    context.Cupom.Add(entity);
+                    context.TipoCupom.Add(entity);
                     context.SaveChanges();
                 }
             }

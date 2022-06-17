@@ -13,7 +13,7 @@ namespace Infinite.Core.Business.CQRS.Cupom.Commands
 {
     public class DeleteCupomCommand : IRequest<Response>
     {
-        public int CupomId { get; set; }
+        public string CupomId { get; set; }
 
         public class DeleteCupomCommandHandler : IRequestHandler<DeleteCupomCommand, Response>
         {
@@ -33,7 +33,9 @@ namespace Infinite.Core.Business.CQRS.Cupom.Commands
 
                     if (cupom == null) throw new Exception("Cupom não encontrado");
 
-                    await _service.DeleteAsync(cupom);
+                    cupom.Status = false;
+
+                    await _service.UpdateAsync(cupom);
 
                     return new Response("Cupom deletado com sucesso");
                 }

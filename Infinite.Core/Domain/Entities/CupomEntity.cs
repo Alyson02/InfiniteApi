@@ -1,15 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infinite.Core.Domain.Entities
 {
     public class CupomEntity
     {
         [Key()]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CupomId { get; set; }
+        public string CupomId { get; set; }
         [MaxLength(20)]
-        public string Tipo { get; set; }
-        public int Quantidade { get; set; }
+        public int TipoCupomId { get; set; }
+        public TipoCupomEntity TipoCupom { get; set; }
+        public int VendasRealizadas { get; set; } = 0;
+        public bool Status { get; set; } = true;
     }
 }
