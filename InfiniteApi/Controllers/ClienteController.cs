@@ -1,6 +1,8 @@
 ﻿using Infinite.Core.Business.CQRS.Cliente.Commands;
 using Infinite.Core.Business.CQRS.Cliente.Queries;
+using Infinite.Core.Infrastructure.Extensions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +12,7 @@ namespace Infinite.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClienteController : ControllerBase
     {
 
@@ -19,7 +22,6 @@ namespace Infinite.Api.Controllers
             this._mediator = mediator;
         }
 
-        // Bloco de consulta
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,34 +34,49 @@ namespace Infinite.Api.Controllers
             return Ok(await _mediator.Send(new GetByIdClienteQuerry { ClienteId = idCliente}));
         }
 
-
-        // Bloco de consulta
-
-        // Bloco de inserção
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateClienteCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
-        // Bloco de inserção
 
-        // Bloco de Atualização
         [HttpPut("{clienteId}")]
         public async Task<IActionResult> Update([FromRoute] int clienteId, UpdateClienteCommand command)
         {
             if (clienteId != command.ClienteId) throw new Exception("O ID informado deve ser o mesmo do Objeto");
             return Ok(await _mediator.Send(command));
         }
-        // Bloco de Atualização
 
-        // Bloco de Deletação
         [HttpDelete("{clienteId}")]
         public async Task<IActionResult> Delete([FromRoute] int clienteId)
         {
-
             return Ok(await _mediator.Send(new DeleteClienteCommand { ClienteId = clienteId }));
         }
-        // Bloco de Deletação
 
+        [HttpGet("Endereco")]
+        public async Task<IActionResult> GetAllEnderecos()
+        {
+            return Ok(await _mediator.Send(new GetAllEnderecosClienteQuery { UserId = HttpContext.User.GetUserId() }));
+        }
+
+        [HttpPost("Endereco")]
+        public async Task<IActionResult> CreateEndereco([FromBody] AdicionarEnderecoCommand command)
+        {
+            command.UserId = HttpContext.User.GetUserId();
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpGet("Cartao")]
+        public async Task<IActionResult> GetAllCartoes()
+        {
+            return Ok(await _mediator.Send(new GetAllCartoesClienteQuery { UserId = HttpContext.User.GetUserId() }));
+        }
+
+        [HttpPost("Cartao")]
+        public async Task<IActionResult> CreateCartao([FromBody] AdicionarCartaoCommand command)
+        {
+            command.UserId = HttpContext.User.GetUserId();
+            return Ok(await _mediator.Send(command));
+        }
     }
 }

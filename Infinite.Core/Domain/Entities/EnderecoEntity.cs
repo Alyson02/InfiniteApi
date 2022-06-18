@@ -13,7 +13,7 @@ namespace Infinite.Core.Domain.Entities
         [MaxLength(10)]
         public string NumCasa { get; set; }
         [MaxLength(50)]
-        public string Apedido { get; set; }
+        public string Apelido { get; set; }
         [MaxLength(20)]
         public string NomeRua { get; set; }
     }
