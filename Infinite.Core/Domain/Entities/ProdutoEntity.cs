@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Infinite.Core.Domain.Entities
@@ -13,10 +14,13 @@ namespace Infinite.Core.Domain.Entities
         public int Estoque { get; set; }
         public double Preco { get; set; }
         public int Pontos { get; set; }
-
+        public string Descricao { get; set; }
         // Chave entrangeira
         public int CategoriaId { get; set; }
         public virtual CategoriaEntity Categoria { get; set; }
+        public int CapaId { get; set; }
+        public ArquivoEntity Capa { get; set; }
 
+        public ICollection<FotoProdutoEntity> Fotos { get; set; }
     }
 }

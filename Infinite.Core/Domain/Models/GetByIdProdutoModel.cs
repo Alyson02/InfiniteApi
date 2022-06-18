@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Infinite.Core.Domain.Models
 {
-    public class ListProdutoModel
+    public class GetByIdProdutoModel
     {
-        public int ProdutoID { get; set; }
-        public string Nome { get; set; }
+        public string Titulo { get; set; }
+        public string Descricao { get; set; }
+        public int Estoque { get; set; }
         public double Preco { get; set; }
-        public string Categoria { get; set; }
         public string UrlCapa { get; set; }
+        public List<string> UrlFotos { get; set; }
     }
 }

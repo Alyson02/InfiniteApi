@@ -3,6 +3,7 @@ using System;
 using Infinite.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    partial class InfiniteContextModelSnapshot : ModelSnapshot
+    [Migration("20220617135350_rmAcessoArquivo")]
+    partial class rmAcessoArquivo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -308,21 +310,6 @@ namespace Infinite.Core.Migrations
                     b.ToTable("FormaPag");
                 });
 
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.FotoProdutoEntity", b =>
-                {
-                    b.Property<int>("ProdutoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ArquivoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProdutoId", "ArquivoId");
-
-                    b.HasIndex("ArquivoId");
-
-                    b.ToTable("FotoProduto");
-                });
-
             modelBuilder.Entity("Infinite.Core.Domain.Entities.FuncionarioEntity", b =>
                 {
                     b.Property<int>("FuncionarioId")
@@ -448,14 +435,8 @@ namespace Infinite.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CapaId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("longtext");
 
                     b.Property<int>("Estoque")
                         .HasColumnType("int");
@@ -471,8 +452,6 @@ namespace Infinite.Core.Migrations
                         .HasColumnType("double");
 
                     b.HasKey("ProdutoID");
-
-                    b.HasIndex("CapaId");
 
                     b.HasIndex("CategoriaId");
 
@@ -652,23 +631,6 @@ namespace Infinite.Core.Migrations
                     b.Navigation("Endereco");
                 });
 
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.FotoProdutoEntity", b =>
-                {
-                    b.HasOne("Infinite.Core.Domain.Entities.ArquivoEntity", "Arquivo")
-                        .WithMany()
-                        .HasForeignKey("ArquivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Infinite.Core.Domain.Entities.ProdutoEntity", null)
-                        .WithMany("Fotos")
-                        .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Arquivo");
-                });
-
             modelBuilder.Entity("Infinite.Core.Domain.Entities.FuncionarioEntity", b =>
                 {
                     b.HasOne("Infinite.Core.Domain.Entities.CupomEntity", "Cupom")
@@ -714,19 +676,11 @@ namespace Infinite.Core.Migrations
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.ProdutoEntity", b =>
                 {
-                    b.HasOne("Infinite.Core.Domain.Entities.ArquivoEntity", "Capa")
-                        .WithMany()
-                        .HasForeignKey("CapaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Infinite.Core.Domain.Entities.CategoriaEntity", "Categoria")
                         .WithMany()
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Capa");
 
                     b.Navigation("Categoria");
                 });
@@ -752,11 +706,6 @@ namespace Infinite.Core.Migrations
                     b.Navigation("Cartoes");
 
                     b.Navigation("Enderecos");
-                });
-
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.ProdutoEntity", b =>
-                {
-                    b.Navigation("Fotos");
                 });
 #pragma warning restore 612, 618
         }

@@ -28,7 +28,8 @@ namespace Infinite.Core.Business.CQRS.Produto.Queries
                 try
                 {
                     var spec = _service.CreateSpec()
-                        .AddInclude(x => x.Categoria);
+                        .AddInclude(x => x.Categoria)
+                        .AddInclude(x => x.Capa);
                     spec.ApplyOrderBy(x => x.Preco);
                     var produtos = await _service.ListAsync(spec);
 
@@ -37,7 +38,8 @@ namespace Infinite.Core.Business.CQRS.Produto.Queries
                         ProdutoID = produto.ProdutoID,
                         Nome = produto.Nome,
                         Preco = produto.Preco,
-                        Categoria = produto.Categoria.Categoria
+                        Categoria = produto.Categoria.Categoria,
+                        UrlCapa = produto.Capa.Url
                     }));
                 }
                 catch (Exception e)

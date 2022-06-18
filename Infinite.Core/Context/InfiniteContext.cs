@@ -36,6 +36,14 @@ namespace Infinite.Core.Context
                 .HasOne<ClienteEntity>()
                 .WithMany(g => g.Enderecos)
                 .HasForeignKey(s => s.ClienteId);
+
+            modelBuilder.Entity<FotoProdutoEntity>()
+                .HasKey(e => new { e.ProdutoId, e.ArquivoId });
+
+            modelBuilder.Entity<FotoProdutoEntity>()
+                .HasOne<ProdutoEntity>()
+                .WithMany(g => g.Fotos)
+                .HasForeignKey(s => s.ProdutoId);
         }
 
         //DataSets
@@ -54,10 +62,12 @@ namespace Infinite.Core.Context
         public DbSet<AgendamentoEntity> Agendamento { get; set; }
         public DbSet<CategoriaEntity> Categoria { get; set; }
         public DbSet<ProdutoEntity> Produto{ get; set; }
-        public DbSet<ItemCarrinhoEntity> ItemCarrinho{ get; set; }
-        public DbSet<CarrinhoEntity> Carrinho{ get; set; }
-        public DbSet<UsuarioEntity> Usuario{ get; set; }
-        public DbSet<TipoUsuarioEntity> TipoUsuario{ get; set; }
-        public DbSet<TipoCupomEntity> TipoCupom{ get; set; }
+        public DbSet<ItemCarrinhoEntity> ItemCarrinho { get; set; }
+        public DbSet<CarrinhoEntity> Carrinho { get; set; }
+        public DbSet<UsuarioEntity> Usuario { get; set; }
+        public DbSet<TipoUsuarioEntity> TipoUsuario { get; set; }
+        public DbSet<TipoCupomEntity> TipoCupom { get; set; }
+        public DbSet<ArquivoEntity> Arquivo { get; set; }
+        public DbSet<FotoProdutoEntity> FotoProduto { get; set; }
     }
 }
