@@ -27,6 +27,7 @@ namespace Infinite.Api.Controllers
         {
             return Ok(await _mediator.Send(new GetAllClienteQuerry()));
         }
+
         [HttpGet("{idCliente}")]
         public async Task<IActionResult> GetById([FromRoute] int idCliente)
         {
@@ -34,6 +35,7 @@ namespace Infinite.Api.Controllers
             return Ok(await _mediator.Send(new GetByIdClienteQuerry { ClienteId = idCliente}));
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateClienteCommand command)
         {
