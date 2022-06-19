@@ -3,6 +3,7 @@ using System;
 using Infinite.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    partial class InfiniteContextModelSnapshot : ModelSnapshot
+    [Migration("20220619183717_DropColunaMaquina")]
+    partial class DropColunaMaquina
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,35 +51,6 @@ namespace Infinite.Core.Migrations
                     b.HasIndex("MaquinaId");
 
                     b.ToTable("Agendamento");
-                });
-
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.ArquivoEntity", b =>
-                {
-                    b.Property<int>("ArquivoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Base64")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("longtext");
-
-                    b.Property<decimal>("Tamanho")
-                        .HasColumnType("decimal(10,2)");
-
-                    b.Property<string>("Tipo")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("ArquivoId");
-
-                    b.ToTable("Arquivo");
                 });
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.CarrinhoEntity", b =>
@@ -162,12 +135,20 @@ namespace Infinite.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
                     b.Property<string>("Nome")
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<int>("Pontos")
                         .HasColumnType("int");
+
+                    b.Property<string>("Senha")
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("Tell")
                         .HasMaxLength(14)
@@ -195,8 +176,8 @@ namespace Infinite.Core.Migrations
                     b.Property<int?>("CartaoCardId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CupomId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("CupomId")
+                        .HasColumnType("int");
 
                     b.Property<double>("Desconto")
                         .HasColumnType("double");
@@ -231,22 +212,18 @@ namespace Infinite.Core.Migrations
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.CupomEntity", b =>
                 {
-                    b.Property<string>("CupomId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("CupomId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
 
-                    b.Property<int>("TipoCupomId")
+                    b.Property<string>("Tipo")
                         .HasMaxLength(20)
-                        .HasColumnType("int");
-
-                    b.Property<int>("VendasRealizadas")
-                        .HasColumnType("int");
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("CupomId");
-
-                    b.HasIndex("TipoCupomId");
 
                     b.ToTable("Cupom");
                 });
@@ -272,7 +249,7 @@ namespace Infinite.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Apelido")
+                    b.Property<string>("Apedido")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
@@ -308,33 +285,26 @@ namespace Infinite.Core.Migrations
                     b.ToTable("FormaPag");
                 });
 
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.FotoProdutoEntity", b =>
-                {
-                    b.Property<int>("ProdutoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ArquivoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProdutoId", "ArquivoId");
-
-                    b.HasIndex("ArquivoId");
-
-                    b.ToTable("FotoProduto");
-                });
-
             modelBuilder.Entity("Infinite.Core.Domain.Entities.FuncionarioEntity", b =>
                 {
                     b.Property<int>("FuncionarioId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("CupomId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<int>("CupomId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Nome")
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
+
+                    b.Property<string>("Senha")
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("Telefone")
                         .HasMaxLength(14)
@@ -442,14 +412,8 @@ namespace Infinite.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CapaId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("longtext");
 
                     b.Property<int>("Estoque")
                         .HasColumnType("int");
@@ -466,25 +430,9 @@ namespace Infinite.Core.Migrations
 
                     b.HasKey("ProdutoID");
 
-                    b.HasIndex("CapaId");
-
                     b.HasIndex("CategoriaId");
 
                     b.ToTable("Produto");
-                });
-
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.TipoCupomEntity", b =>
-                {
-                    b.Property<int>("TipoCupomId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("TipoCupomId");
-
-                    b.ToTable("TipoCupom");
                 });
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.TipoUsuarioEntity", b =>
@@ -597,7 +545,9 @@ namespace Infinite.Core.Migrations
 
                     b.HasOne("Infinite.Core.Domain.Entities.CupomEntity", "Cupom")
                         .WithMany()
-                        .HasForeignKey("CupomId");
+                        .HasForeignKey("CupomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Infinite.Core.Domain.Entities.EnderecoEntity", "Endereco")
                         .WithMany()
@@ -618,17 +568,6 @@ namespace Infinite.Core.Migrations
                     b.Navigation("Pagamento");
                 });
 
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.CupomEntity", b =>
-                {
-                    b.HasOne("Infinite.Core.Domain.Entities.TipoCupomEntity", "TipoCupom")
-                        .WithMany()
-                        .HasForeignKey("TipoCupomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("TipoCupom");
-                });
-
             modelBuilder.Entity("Infinite.Core.Domain.Entities.EnderecoClienteEntity", b =>
                 {
                     b.HasOne("Infinite.Core.Domain.Entities.ClienteEntity", null)
@@ -646,28 +585,13 @@ namespace Infinite.Core.Migrations
                     b.Navigation("Endereco");
                 });
 
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.FotoProdutoEntity", b =>
-                {
-                    b.HasOne("Infinite.Core.Domain.Entities.ArquivoEntity", "Arquivo")
-                        .WithMany()
-                        .HasForeignKey("ArquivoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Infinite.Core.Domain.Entities.ProdutoEntity", null)
-                        .WithMany("Fotos")
-                        .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Arquivo");
-                });
-
             modelBuilder.Entity("Infinite.Core.Domain.Entities.FuncionarioEntity", b =>
                 {
                     b.HasOne("Infinite.Core.Domain.Entities.CupomEntity", "Cupom")
                         .WithMany()
-                        .HasForeignKey("CupomId");
+                        .HasForeignKey("CupomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Infinite.Core.Domain.Entities.UsuarioEntity", "Usuario")
                         .WithMany()
@@ -708,19 +632,11 @@ namespace Infinite.Core.Migrations
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.ProdutoEntity", b =>
                 {
-                    b.HasOne("Infinite.Core.Domain.Entities.ArquivoEntity", "Capa")
-                        .WithMany()
-                        .HasForeignKey("CapaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Infinite.Core.Domain.Entities.CategoriaEntity", "Categoria")
                         .WithMany()
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Capa");
 
                     b.Navigation("Categoria");
                 });
@@ -746,11 +662,6 @@ namespace Infinite.Core.Migrations
                     b.Navigation("Cartoes");
 
                     b.Navigation("Enderecos");
-                });
-
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.ProdutoEntity", b =>
-                {
-                    b.Navigation("Fotos");
                 });
 #pragma warning restore 612, 618
         }

@@ -31,6 +31,7 @@ namespace Infinite.Core.Business.CQRS.Produto.Queries
                         .AddInclude(x => x.Categoria)
                         .AddInclude(x => x.Capa);
                     spec.ApplyOrderBy(x => x.Preco);
+
                     var produtos = await _service.ListAsync(spec);
 
                     return new Response(produtos.Select(produto => new ListProdutoModel
