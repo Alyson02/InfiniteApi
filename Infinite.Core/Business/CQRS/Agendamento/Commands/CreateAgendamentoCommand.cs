@@ -16,21 +16,22 @@ namespace Infinite.Core.Business.CQRS.Agendamento.Commands
     public class CreateAgendamentoCommand : IRequest<Response>
     {
         //Props
-        public int AgendamentoId { get; set; }
+        public int UsuarioId { get; set; }
         public DateTime Horario { get; set; }
         public int Pontos { get; set; }
 
         // Chave entrangeira
-        public int ClienteId { get; set; }
         public int JogoId { get; set; }
         public int MaquinaId { get; set; }
         
         public class CreateAgendamentoCommandHandler : IRequestHandler<CreateAgendamentoCommand, Response>
         {
             private readonly IServiceBase<AgendamentoEntity> _service;
-            public CreateAgendamentoCommandHandler(IServiceBase<AgendamentoEntity> service)
+            private readonly IServiceBase<ClienteEntity> _clientService;
+            public CreateAgendamentoCommandHandler(IServiceBase<AgendamentoEntity> service, IServiceBase<ClienteEntity> serviceCliente)
             {
                 _service = service;
+                _clientService = serviceCliente;
             }
 
             public async Task<Response> Handle(CreateAgendamentoCommand command, CancellationToken cancellationToken)
@@ -38,12 +39,16 @@ namespace Infinite.Core.Business.CQRS.Agendamento.Commands
 
                 try
                 {
+                    var spec = this._clientService.CreateSpec(x => x.UsuarioId == command.UsuarioId)
+                        .AddInclude(x => x.Usuario);
+
+                    var Cliente = await this._clientService.FindAsync(spec);
+
                     var Agendamento = new AgendamentoEntity
                     {
-                        AgendamentoId = command.AgendamentoId,
                         Horario = command.Horario,
                         Pontos = command.Pontos, //Validar com o Alyson
-                        ClienteId = command.ClienteId,
+                        ClienteId = Cliente.ClienteId,
                         JogoId = command.JogoId,
                         MaquinaId = command.MaquinaId,
                     };
