@@ -44,8 +44,6 @@ namespace Infinite.Core.Business.CQRS.Cliente.Commands//colocar o namespace corr
                     cliente.Nome = command.Nome;
                     cliente.Pontos = command.Pontos;
                     cliente.Tell = command.Tell;
-                    cliente.Email = command.Email;
-                    cliente.Senha = command.Senha;
 
 
                     await _service.UpdateAsync(cliente);

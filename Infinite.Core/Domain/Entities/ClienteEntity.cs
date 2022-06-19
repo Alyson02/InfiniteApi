@@ -16,10 +16,10 @@ namespace Infinite.Core.Domain.Entities
 
         public string Tell { get; set; }
         [MaxLength(15)]
-
+        /*
         public string Senha { get; set; }
-        [MaxLength(100)]
-        public string Email { get; set; }
+        [MaxLength(100)]/
+        public string Email { get; set; }*/
         public int Pontos {get; set; }
         public int UsuarioId { get; set; }
         public UsuarioEntity Usuario { get; set; }

@@ -10,9 +10,5 @@ namespace Infinite.Core.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MaquinaId { get; set; }
         public bool Status { get; set; }
-        public DateTime Inicio { get; set; }
-        public DateTime Termino { get; set; }
-
-
     }
 }

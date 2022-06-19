@@ -36,7 +36,6 @@ namespace Infinite.Core.Business.CQRS.Cliente.Queries//colocar o namespace corre
                         ClienteId = x.ClienteId,
                         Nome = x.Nome,
                         Tell = x.Tell,
-                        Email = x.Email,
                     });
 
                     return new Response(model);

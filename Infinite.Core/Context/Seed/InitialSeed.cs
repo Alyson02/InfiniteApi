@@ -128,8 +128,6 @@ namespace Infinite.Core.Context.Seed
                 new ClienteEntity
                 {
                     Nome = "Samuel Gamer FF 10",
-                    Email = "samuel.gamerff10@gmail.com",
-                    Senha = "samuel@2022",
                     Tell = "(11)93363-8836",
                     Pontos = 0,
                     Usuario = new UsuarioEntity
