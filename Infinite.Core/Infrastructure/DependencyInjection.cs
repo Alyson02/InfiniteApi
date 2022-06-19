@@ -100,7 +100,7 @@ namespace Infinite.Core.Infrastructure
                     context.TipoCupom.Add(entity);
                     context.SaveChanges();
                 }
-            }*/
+            }
 
             foreach (var entity in InitialSeed.Produto)
             {
