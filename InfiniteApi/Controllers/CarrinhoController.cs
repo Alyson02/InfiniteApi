@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Infinite.Api.Controllers
@@ -57,11 +58,11 @@ namespace Infinite.Api.Controllers
         }
 
         //Apenas ADM
-
         [HttpGet("Carrinhos")]
         [Authorize(Roles = "Master")]
         public async Task<IActionResult> GetAllCarrinho()
         {
+            //if (User.GetUserRole() != "Master") return Forbid();
             return Ok(await _mediator.Send(new GetAllCarrinhoQuery()));
         }
 

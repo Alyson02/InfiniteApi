@@ -66,5 +66,10 @@ namespace Infinite.Core.Infrastructure.Extensions
             return user.FindFirst("uid") != null ? Convert.ToInt32(user.FindFirst("uid").Value) : 0;
         }
 
+        public static string GetUserRole(this ClaimsPrincipal user)
+        {
+            return user.FindFirst("role").Value;
+        }
+
     }
 }
