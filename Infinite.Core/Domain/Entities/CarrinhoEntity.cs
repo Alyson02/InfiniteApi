@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,8 +9,10 @@ namespace Infinite.Core.Domain.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CarrinhoID { get; set; }
-        public bool StatusCar { get; set; }
+        public int CarrinhoId { get; set; }
+        public bool Status { get; set; }
+        public virtual DateTime DataCadastro { get;  set; } = DateTime.Now;
+        public virtual DateTime? DataFechamento { get;  set; }
 
         // Chave entrangeira
         public int ClienteId { get; set; }

@@ -44,7 +44,12 @@ namespace Infinite.Core.Infrastructure.Repository
             }
 
             if (asNoTracking)
-                return await query.AsNoTracking().FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+            {
+                var a = await query.AsNoTracking().FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
+                return a;
+            }
+
+
 
             return await query.FirstOrDefaultAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -92,7 +97,11 @@ namespace Infinite.Core.Infrastructure.Repository
             }
 
             if (asNoTracking)
-                return await query.AsNoTracking().ToListAsync(cancellationToken).ConfigureAwait(false);
+            {
+                var res = await query.AsNoTracking().ToListAsync(cancellationToken).ConfigureAwait(false);
+                return res;
+            }
+
 
             return await query.ToListAsync(cancellationToken).ConfigureAwait(false);
         }

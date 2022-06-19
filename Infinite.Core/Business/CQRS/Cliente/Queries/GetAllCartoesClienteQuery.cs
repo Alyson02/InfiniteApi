@@ -32,7 +32,7 @@ namespace Infinite.Core.Business.CQRS.Cliente.Queries
                     var spec = _clienteService.CreateSpec(x => x.UsuarioId == query.UserId);
                     var cliente = await _clienteService.FindAsync(spec);
 
-                    var specCartao = _service.CreateSpec().AddInclude(x => x.Cartao); 
+                    var specCartao = _service.CreateSpec(x => x.ClienteId == cliente.ClienteId).AddInclude(x => x.Cartao); 
                     var cartoesCliente = await _service.ListAsync(specCartao);
 
                     return new Response(cartoesCliente);

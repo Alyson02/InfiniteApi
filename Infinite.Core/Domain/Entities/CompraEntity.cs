@@ -19,10 +19,12 @@ namespace Infinite.Core.Domain.Entities
         public virtual CupomEntity Cupom { get; set; }
         public int PagamentoId { get; set; }
         public virtual PagamentoEntity Pagamento { get; set; }
-        public int EndId { get; set; }
+        public int EnderecoId { get; set; }
         public virtual EnderecoEntity Endereco { get; set; }
-        public int CardId { get; set; }
+        public int? CartaoId { get; set; }
         public virtual CartaoEntity Cartao { get; set; }
+        public int CarrinhoId { get; set; }
+        public CarrinhoEntity Carrinho { get; set; }
 
     }
 }

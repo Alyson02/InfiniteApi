@@ -12,7 +12,7 @@ namespace Infinite.Core.Domain.Entities
         public string Dados { get; set; }
 
         //Chaves estrangeiras
-        public int FrmID { get; set; }
+        public int FormaId { get; set; }
         public virtual FormaPagEntity FormaPag { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Infinite.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    partial class InfiniteContextModelSnapshot : ModelSnapshot
+    [Migration("20220618142507_CarrinhoFixNewFields")]
+    partial class CarrinhoFixNewFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,10 +197,10 @@ namespace Infinite.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CarrinhoId")
+                    b.Property<int>("CardId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CartaoId")
+                    b.Property<int?>("CartaoCardId")
                         .HasColumnType("int");
 
                     b.Property<string>("CupomId")
@@ -207,7 +209,10 @@ namespace Infinite.Core.Migrations
                     b.Property<double>("Desconto")
                         .HasColumnType("double");
 
-                    b.Property<int>("EnderecoId")
+                    b.Property<int>("EndId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EnderecoEndId")
                         .HasColumnType("int");
 
                     b.Property<int>("PagamentoId")
@@ -221,13 +226,11 @@ namespace Infinite.Core.Migrations
 
                     b.HasKey("CompraId");
 
-                    b.HasIndex("CarrinhoId");
-
-                    b.HasIndex("CartaoId");
+                    b.HasIndex("CartaoCardId");
 
                     b.HasIndex("CupomId");
 
-                    b.HasIndex("EnderecoId");
+                    b.HasIndex("EnderecoEndId");
 
                     b.HasIndex("PagamentoId");
 
@@ -434,10 +437,10 @@ namespace Infinite.Core.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
-                    b.Property<int>("FormaId")
+                    b.Property<int?>("FormaPagFrmId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FormaPagFrmId")
+                    b.Property<int>("FrmID")
                         .HasColumnType("int");
 
                     b.HasKey("PagamentoId");
@@ -602,15 +605,9 @@ namespace Infinite.Core.Migrations
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.CompraEntity", b =>
                 {
-                    b.HasOne("Infinite.Core.Domain.Entities.CarrinhoEntity", "Carrinho")
-                        .WithMany()
-                        .HasForeignKey("CarrinhoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Infinite.Core.Domain.Entities.CartaoEntity", "Cartao")
                         .WithMany()
-                        .HasForeignKey("CartaoId");
+                        .HasForeignKey("CartaoCardId");
 
                     b.HasOne("Infinite.Core.Domain.Entities.CupomEntity", "Cupom")
                         .WithMany()
@@ -618,17 +615,13 @@ namespace Infinite.Core.Migrations
 
                     b.HasOne("Infinite.Core.Domain.Entities.EnderecoEntity", "Endereco")
                         .WithMany()
-                        .HasForeignKey("EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EnderecoEndId");
 
                     b.HasOne("Infinite.Core.Domain.Entities.PagamentoEntity", "Pagamento")
                         .WithMany()
                         .HasForeignKey("PagamentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Carrinho");
 
                     b.Navigation("Cartao");
 

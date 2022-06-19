@@ -11,8 +11,5 @@ namespace Infinite.Core.Domain.Entities
         public double ValorUnidade { get; set; }
         public int Quantidade { get; set; }
         public int Pontos { get; set; }
-
-        // Chave entrangeira
-
     }
 }
