@@ -3,6 +3,7 @@ using System;
 using Infinite.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    partial class InfiniteContextModelSnapshot : ModelSnapshot
+    [Migration("20220619052409_AddCarrinhoToCompra")]
+    partial class AddCarrinhoToCompra
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -410,8 +412,14 @@ namespace Infinite.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Inicio")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("Termino")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("MaquinaId");
 

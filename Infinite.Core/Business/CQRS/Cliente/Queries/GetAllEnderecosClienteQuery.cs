@@ -34,7 +34,7 @@ namespace Infinite.Core.Business.CQRS.Cliente.Queries
                     var spec = _clienteService.CreateSpec(x => x.UsuarioId == query.UserId);
                     var cliente = await _clienteService.FindAsync(spec);
 
-                    var specEndereco = _service.CreateSpec().AddInclude(x => x.Endereco); 
+                    var specEndereco = _service.CreateSpec(x => x.ClienteId == cliente.ClienteId).AddInclude(x => x.Endereco); 
                     var enderecosCliente = await _service.ListAsync(specEndereco);
 
                     return new Response(enderecosCliente);

@@ -1,6 +1,7 @@
 ﻿using AutoMapper.EquivalencyExpression;
 using FluentValidation;
 using Infinite.Core.Business.Services.Base;
+using Infinite.Core.Business.Services.Carrinho;
 using Infinite.Core.Business.Services.Token;
 using Infinite.Core.Context;
 using Infinite.Core.Context.Seed;
@@ -41,6 +42,7 @@ namespace Infinite.Core.Infrastructure
             services.AddScoped(typeof(IServiceBase<>), typeof(ServiceBase<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ICarrinhoService, CarrinhoService>();
 
             services.AddAutoMapper(cfg =>
             {

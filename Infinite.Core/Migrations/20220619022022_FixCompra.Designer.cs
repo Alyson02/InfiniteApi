@@ -3,6 +3,7 @@ using System;
 using Infinite.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    partial class InfiniteContextModelSnapshot : ModelSnapshot
+    [Migration("20220619022022_FixCompra")]
+    partial class FixCompra
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,10 +197,7 @@ namespace Infinite.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CarrinhoId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CartaoId")
+                    b.Property<int>("CartaoId")
                         .HasColumnType("int");
 
                     b.Property<string>("CupomId")
@@ -220,8 +219,6 @@ namespace Infinite.Core.Migrations
                         .HasColumnType("double");
 
                     b.HasKey("CompraId");
-
-                    b.HasIndex("CarrinhoId");
 
                     b.HasIndex("CartaoId");
 
@@ -410,8 +407,14 @@ namespace Infinite.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Inicio")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime>("Termino")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("MaquinaId");
 
@@ -596,15 +599,11 @@ namespace Infinite.Core.Migrations
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.CompraEntity", b =>
                 {
-                    b.HasOne("Infinite.Core.Domain.Entities.CarrinhoEntity", "Carrinho")
-                        .WithMany()
-                        .HasForeignKey("CarrinhoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Infinite.Core.Domain.Entities.CartaoEntity", "Cartao")
                         .WithMany()
-                        .HasForeignKey("CartaoId");
+                        .HasForeignKey("CartaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Infinite.Core.Domain.Entities.CupomEntity", "Cupom")
                         .WithMany()
@@ -621,8 +620,6 @@ namespace Infinite.Core.Migrations
                         .HasForeignKey("PagamentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Carrinho");
 
                     b.Navigation("Cartao");
 
