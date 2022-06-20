@@ -23,12 +23,14 @@ namespace Infinite.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _mediator.Send(new GetAllClienteQuerry()));
         }
 
         [HttpGet("{idCliente}")]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> GetById([FromRoute] int idCliente)
         {
 
@@ -50,6 +52,7 @@ namespace Infinite.Api.Controllers
         }
 
         [HttpDelete("{clienteId}")]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> Delete([FromRoute] int clienteId)
         {
             return Ok(await _mediator.Send(new DeleteClienteCommand { ClienteId = clienteId }));

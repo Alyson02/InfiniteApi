@@ -1,6 +1,7 @@
 ﻿using Infinite.Core.Business.CQRS.Maquina.Commands;
 using Infinite.Core.Business.CQRS.Maquina.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ namespace Infinite.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MaquinaController : ControllerBase
     {
 
@@ -25,7 +27,9 @@ namespace Infinite.Api.Controllers
         {
             return Ok(await _mediator.Send(new GetAllMaquinaQuerry()));
         }
+
         [HttpGet("{idMaquina}")]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> GetById([FromRoute] int idMaquina)
         {
 
@@ -37,6 +41,7 @@ namespace Infinite.Api.Controllers
 
         // Bloco de inserção
         [HttpPost]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> Create([FromBody] CreateMaquinaCommand command)
         {
             return Ok(await _mediator.Send(command));
@@ -44,6 +49,7 @@ namespace Infinite.Api.Controllers
         // Bloco de inserção
 
         // Bloco de Atualização
+        [Authorize(Roles = "Master")]
         [HttpPut("{MaquinaId}")]
         public async Task<IActionResult> Update([FromRoute] int MaquinaId, UpdateMaquinaCommand command)
         {
@@ -53,6 +59,7 @@ namespace Infinite.Api.Controllers
         // Bloco de Atualização
 
         // Bloco de Deletação
+        [Authorize(Roles = "Master")]
         [HttpDelete("{MaquinaId}")]
         public async Task<IActionResult> Delete([FromRoute] int MaquinaId)
         {

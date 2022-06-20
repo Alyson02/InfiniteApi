@@ -42,13 +42,18 @@ namespace Infinite.Core.Business.CQRS.Agendamento.Commands
                     var spec = this._clientService.CreateSpec(x => x.UsuarioId == command.UsuarioId)
                         .AddInclude(x => x.Usuario);
 
-                    var Cliente = await this._clientService.FindAsync(spec);
+                    var cliente = await this._clientService.FindAsync(spec);
+
+                    var specAgenda = _service.CreateSpec(x => x.ClienteId == cliente.ClienteId && x.Status == false);
+                    var agenda = await _service.FindAsync(specAgenda);
+
+                    if (agenda != null) throw new Exception("Você ainda tem uma agenda em aberto");
 
                     var Agendamento = new AgendamentoEntity
                     {
                         Horario = command.Horario,
                         Pontos = command.Pontos, //Validar com o Alyson
-                        ClienteId = Cliente.ClienteId,
+                        ClienteId = cliente.ClienteId,
                         JogoId = command.JogoId,
                         MaquinaId = command.MaquinaId,
                     };

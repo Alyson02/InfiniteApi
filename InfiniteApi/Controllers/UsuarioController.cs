@@ -1,5 +1,6 @@
 ﻿using Infinite.Core.Business.CQRS.Usuario.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

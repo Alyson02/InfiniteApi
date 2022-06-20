@@ -69,5 +69,6 @@ namespace Infinite.Core.Context
         public DbSet<TipoCupomEntity> TipoCupom { get; set; }
         public DbSet<ArquivoEntity> Arquivo { get; set; }
         public DbSet<FotoProdutoEntity> FotoProduto { get; set; }
+        public DbSet<VisitantesEntity> Visitantes { get; set; }
     }
 }

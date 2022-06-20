@@ -3,6 +3,7 @@ using System;
 using Infinite.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    partial class InfiniteContextModelSnapshot : ModelSnapshot
+    [Migration("20220620000903_AddJogoFkProduto")]
+    partial class AddJogoFkProduto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -534,17 +536,6 @@ namespace Infinite.Core.Migrations
                     b.HasIndex("TipoUsuarioId");
 
                     b.ToTable("Usuario");
-                });
-
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.VisitantesEntity", b =>
-                {
-                    b.Property<int>("NumeroVisitas")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.HasKey("NumeroVisitas");
-
-                    b.ToTable("Visitantes");
                 });
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.AgendamentoEntity", b =>

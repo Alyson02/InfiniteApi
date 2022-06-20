@@ -12,6 +12,7 @@ namespace Infinite.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CupomController : ControllerBase
     {
         private IMediator _mediator;
@@ -35,12 +36,14 @@ namespace Infinite.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> Create([FromBody] CreateCupomCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
 
         [HttpPut("{cupomId}")]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> Update([FromRoute] string cupomId ,[FromBody] UpdateCupomCommand command)
         {
             if (cupomId != command.CupomId) throw new Exception("Id do cupom deve ser o mesmo do objeto enviado");
@@ -48,6 +51,7 @@ namespace Infinite.Api.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> Delete([FromRoute] string cupomId)
         {
             return Ok(await _mediator.Send(new DeleteCupomCommand { CupomId = cupomId}));

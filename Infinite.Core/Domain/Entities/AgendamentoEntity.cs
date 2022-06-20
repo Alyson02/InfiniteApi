@@ -12,6 +12,7 @@ namespace Infinite.Core.Domain.Entities
         public int AgendamentoId { get; set; }
         public DateTime Horario { get; set; }
         public int Pontos { get; set; }
+        public bool Status { get; set; } = false;
 
         // Chave entrangeira
         public int ClienteId { get; set; }

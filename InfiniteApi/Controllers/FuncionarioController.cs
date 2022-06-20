@@ -1,6 +1,7 @@
 ﻿using Infinite.Core.Business.CQRS.Funcionario.Commands;
 using Infinite.Core.Business.CQRS.Funcionario.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ namespace Infinite.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Master")]
     public class FuncionarioController : ControllerBase
     {
         private IMediator _mediator;

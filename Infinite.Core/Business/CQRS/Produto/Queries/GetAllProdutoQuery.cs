@@ -17,16 +17,20 @@ namespace Infinite.Core.Business.CQRS.Produto.Queries
         public class GetAllProdutoQueryHandler : IRequestHandler<GetAllProdutoQuery, Response>
         {
             private readonly IServiceBase<ProdutoEntity> _service;
+            private readonly IServiceBase<VisitantesEntity> _visitantesService;
 
-            public GetAllProdutoQueryHandler(IServiceBase<ProdutoEntity> service)
+            public GetAllProdutoQueryHandler(IServiceBase<ProdutoEntity> service, IServiceBase<VisitantesEntity> visitantesService)
             {
                 _service = service;
+                _visitantesService = visitantesService; 
             }
 
             public async Task<Response> Handle(GetAllProdutoQuery query, CancellationToken cancellationToken)
             {
                 try
                 {
+                    await _visitantesService.InsertAsync(new VisitantesEntity());
+
                     var spec = _service.CreateSpec()
                         .AddInclude(x => x.Categoria)
                         .AddInclude(x => x.Capa);

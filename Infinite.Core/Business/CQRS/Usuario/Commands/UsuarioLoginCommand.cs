@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using Infinite.Core.Business.Services.Token;
+using Infinite.Core.Business.CQRS.Usuario.Validations;
 
 namespace Infinite.Core.Business.CQRS.Usuario.Commands
 {

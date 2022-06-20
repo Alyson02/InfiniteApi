@@ -14,5 +14,8 @@ namespace Infinite.Core.Domain.Entities
         public string Descrição { get; set; }
         public int PontoPreco { get; set; }
 
+        public int ProdutoId { get; set; }
+        public virtual ProdutoEntity Produto { get; set; }
+
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Infinite.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infinite.Core.Migrations
 {
     [DbContext(typeof(InfiniteContext))]
-    partial class InfiniteContextModelSnapshot : ModelSnapshot
+    [Migration("20220619230728_AddColumnStatus")]
+    partial class AddColumnStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -399,15 +401,10 @@ namespace Infinite.Core.Migrations
                     b.Property<int>("PontoPreco")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProdutoId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("JogoId");
-
-                    b.HasIndex("ProdutoId");
 
                     b.ToTable("Jogo");
                 });
@@ -534,17 +531,6 @@ namespace Infinite.Core.Migrations
                     b.HasIndex("TipoUsuarioId");
 
                     b.ToTable("Usuario");
-                });
-
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.VisitantesEntity", b =>
-                {
-                    b.Property<int>("NumeroVisitas")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.HasKey("NumeroVisitas");
-
-                    b.ToTable("Visitantes");
                 });
 
             modelBuilder.Entity("Infinite.Core.Domain.Entities.AgendamentoEntity", b =>
@@ -725,17 +711,6 @@ namespace Infinite.Core.Migrations
                     b.HasOne("Infinite.Core.Domain.Entities.ProdutoEntity", "Produto")
                         .WithMany()
                         .HasForeignKey("ProdutoID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Produto");
-                });
-
-            modelBuilder.Entity("Infinite.Core.Domain.Entities.JogoEntity", b =>
-                {
-                    b.HasOne("Infinite.Core.Domain.Entities.ProdutoEntity", "Produto")
-                        .WithMany()
-                        .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

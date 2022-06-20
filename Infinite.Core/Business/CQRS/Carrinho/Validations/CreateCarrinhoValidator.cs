@@ -21,19 +21,6 @@ namespace Infinite.Core.Business.CQRS.Carrinho.Validations
             RuleFor(x => x)
                 .Custom((carrinho, context) =>
                 {
-                    var spec = service.CreateSpec(x => x.Cliente.UsuarioId == carrinho.UserId);
-                    spec.AddInclude(x => x.Cliente);
-                    var cliente = service.FindAsync(spec).Result;
-
-                    if(cliente is null)
-                    {
-                        context.AddFailure("Não conseguimos identifica-lo");
-                    }
-                });
-
-            RuleFor(x => x)
-                .Custom((carrinho, context) =>
-                {
                     var spec = service.CreateSpec(x => x.Cliente.UsuarioId == carrinho.UserId && x.Status == false);
                     spec.AddInclude(x => x.Cliente);
                     var carrinhos = service.ListAsync(spec).Result;

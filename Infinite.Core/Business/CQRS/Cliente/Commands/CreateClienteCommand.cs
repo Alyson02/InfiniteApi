@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
+using Infinite.Core.Business.CQRS.Cliente.Validations;
 
 namespace Infinite.Core.Business.CQRS.Cliente.Commands
 { //colocar o namespace correto Ex.: .Produto.Commands
@@ -31,9 +33,13 @@ namespace Infinite.Core.Business.CQRS.Cliente.Commands
 
             public async Task<Response> Handle(CreateClienteCommand command, CancellationToken cancellationToken)
             {
-
                 try
                 {
+                    var clienteValidator = new CreateClienteValidator(_service);
+                    var resClienteValidator = await clienteValidator.ValidateAsync(command);
+
+                    if (resClienteValidator.IsValid) throw new ValidationException(resClienteValidator.Errors);
+
                     var cliente = new ClienteEntity
                     {
                         Nome = command.Nome,
@@ -50,6 +56,10 @@ namespace Infinite.Core.Business.CQRS.Cliente.Commands
                     await _service.InsertAsync(cliente);
 
                     return new Response("Cliente adicionado com sucesso");
+                }
+                catch(ValidationException ve)
+                {
+                    throw new ValidationException(ve.Message);
                 }
                 catch (Exception e)
                 {

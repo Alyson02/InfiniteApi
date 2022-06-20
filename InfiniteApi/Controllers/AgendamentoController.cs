@@ -29,10 +29,18 @@ namespace Infinite.Api.Controllers
         {
             return Ok(await _mediator.Send(new GetAllAgendamentoQuerry()));
         }
+
+        [HttpGet("Usuario")]
+        public async Task<IActionResult> GetAgendaAtual()
+        {
+            var usuarioId = HttpContext.User.GetUserId();
+            return Ok(await _mediator.Send(new GetAgendaAtualQuery { UserId = usuarioId }));
+        }
+
         [HttpGet("{idAgendamento}")]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> GetById([FromRoute] int idAgendamento)
         {
-
             return Ok(await _mediator.Send(new GetByIdAgendamentoQuerry { AgendamentoId = idAgendamento }));
         }
 
@@ -44,7 +52,6 @@ namespace Infinite.Api.Controllers
         public async Task<IActionResult> Create([FromBody] CreateAgendamentoCommand command)
         {
             command.UsuarioId = HttpContext.User.GetUserId();
-
             return Ok(await _mediator.Send(command));
         }
         // Bloco de inserção
@@ -60,6 +67,7 @@ namespace Infinite.Api.Controllers
 
         // Bloco de Deletação
         [HttpDelete("{AgendamentoId}")]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> Delete([FromRoute] int AgendamentoId)
         {
 

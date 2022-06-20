@@ -1,6 +1,7 @@
 ﻿using Infinite.Core.Business.CQRS.Jogo.Commands;
 using Infinite.Core.Business.CQRS.Jogo.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ namespace Infinite.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class JogoController : ControllerBase
     {
 
@@ -28,7 +30,6 @@ namespace Infinite.Api.Controllers
         [HttpGet("{idJogo}")]
         public async Task<IActionResult> GetById([FromRoute] int idJogo)
         {
-
             return Ok(await _mediator.Send(new GetByIdJogoQuerry { JogoId = idJogo }));
         }
 
@@ -37,6 +38,7 @@ namespace Infinite.Api.Controllers
 
         // Bloco de inserção
         [HttpPost]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> Create([FromBody] CreateJogoCommand command)
         {
             return Ok(await _mediator.Send(command));
@@ -45,6 +47,7 @@ namespace Infinite.Api.Controllers
 
         // Bloco de Atualização
         [HttpPut("{JogoId}")]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> Update([FromRoute] int JogoId, UpdateJogoCommand command)
         {
             if (JogoId != command.JogoId) throw new Exception("O ID informado deve ser o mesmo do Objeto");
@@ -54,6 +57,7 @@ namespace Infinite.Api.Controllers
 
         // Bloco de Deletação
         [HttpDelete("{JogoId}")]
+        [Authorize(Roles = "Master")]
         public async Task<IActionResult> Delete([FromRoute] int JogoId)
         {
 

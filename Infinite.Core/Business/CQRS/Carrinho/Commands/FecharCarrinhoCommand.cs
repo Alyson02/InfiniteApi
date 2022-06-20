@@ -51,7 +51,7 @@ namespace Infinite.Core.Business.CQRS.Carrinho.Commands
                     carrinho.Status = true;
                     await _service.UpdateAsync(carrinho);
 
-                    var compra = new CompraEntity();
+                    var compra = new CompraEntity { CarrinhoId = carrinho.CarrinhoId};
 
                     foreach (var item in carrinho.Produtos)
                     {
