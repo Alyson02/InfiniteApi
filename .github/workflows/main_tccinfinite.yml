@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'tccInfinite'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AA91366BCC5D48E1B70D2D4183B3A9EF }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BDBACD75640F4A91BE2CC1C2A28192D1 }}
           package: .
