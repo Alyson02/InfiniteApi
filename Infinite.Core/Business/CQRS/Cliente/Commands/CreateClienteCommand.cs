@@ -38,7 +38,7 @@ namespace Infinite.Core.Business.CQRS.Cliente.Commands
                     var clienteValidator = new CreateClienteValidator(_service);
                     var resClienteValidator = await clienteValidator.ValidateAsync(command);
 
-                    if (resClienteValidator.IsValid) throw new ValidationException(resClienteValidator.Errors);
+                    if (!resClienteValidator.IsValid) throw new ValidationException(resClienteValidator.Errors);
 
                     var cliente = new ClienteEntity
                     {
