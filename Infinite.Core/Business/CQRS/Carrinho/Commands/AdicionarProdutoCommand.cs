@@ -46,7 +46,7 @@ namespace Infinite.Core.Business.CQRS.Carrinho.Commands
                     {
                         if (lastCarrinho.Produtos.Any(x => x.ProdutoID == command.ProdutoId))
                         {
-                            var produto = await _service.FindAsync(_service.CreateSpec(x => x.ProdutoID == command.ProdutoId));
+                            var produto = await _service.FindAsync(_service.CreateSpec(x => x.ProdutoID == command.ProdutoId && x.CarrinhoID == lastCarrinho.CarrinhoId));
                             produto.Quantidade += command.Quantidade;
 
                             await _service.UpdateAsync(produto);
