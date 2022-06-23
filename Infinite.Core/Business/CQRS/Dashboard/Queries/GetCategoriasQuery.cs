@@ -36,7 +36,7 @@ namespace Infinite.Core.Business.CQRS.Dashboard.Queries
 	                                        compra comp ON comp.CarrinhoId = c.CarrinhoId INNER JOIN
 	                                        produto p ON p.ProdutoID = ic.ProdutoID INNER JOIN 
 	                                        categoria cat ON cat.categoriaId = p.categoriaId GROUP BY cat.Categoria";
-                    var categorias = await _unitOfWork.QueryFirstOrDefaultAsync<DashboardCategoriaModel>(sqlCategorias, cancellationToken);
+                    var categorias = await _unitOfWork.QuerySQLAsync<DashboardCategoriaModel>(sqlCategorias, cancellationToken);
 
                     return new Response(categorias);
                 }

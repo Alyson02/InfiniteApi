@@ -33,7 +33,7 @@ namespace Infinite.Core.Business.CQRS.Dashboard.Queries
                                         join
                                         produto p on p.ProdutoID = ic.ProdutoID GROUP BY p.Nome
                                         limit 10;";
-                    var Top10 = await _unitOfWork.QueryFirstOrDefaultAsync<DashboardTop10Model>(sqlTop10, cancellationToken);
+                    var Top10 = await _unitOfWork.QuerySQLAsync<DashboardTop10Model>(sqlTop10, cancellationToken);
 
                     return new Response(Top10);
                 }
