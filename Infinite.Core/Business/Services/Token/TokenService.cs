@@ -43,7 +43,8 @@ namespace Infinite.Core.Business.Services.Token
             return new UsuarioToken()
             {
                 Token = tokenHandler.WriteToken(token),
-                Expiracao = expiration
+                Expiracao = expiration,
+                Role = user.TipoUsuario.Role,
             };
         }
     }

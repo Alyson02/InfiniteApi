@@ -10,5 +10,6 @@ namespace Infinite.Core.Domain.Models
     {
         public string Token { get; set; }
         public DateTime Expiracao { get; set; }
+        public string Role { get; set; }
     }
 }
