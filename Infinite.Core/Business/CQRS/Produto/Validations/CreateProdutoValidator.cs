@@ -28,7 +28,7 @@ namespace Infinite.Core.Business.CQRS.Produto.Validations
                 .MaximumLength(40)
                 .WithMessage("Título muito grande");
 
-            RuleFor(x => x.Nome)
+            RuleFor(x => x.Descricao)
                 .NotEmpty()
                 .WithMessage("Descrição é obrigatório!")
                 .MinimumLength(40)
