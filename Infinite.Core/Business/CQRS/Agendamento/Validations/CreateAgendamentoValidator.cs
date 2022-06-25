@@ -55,6 +55,7 @@ namespace Infinite.Core.Business.CQRS.Agendamento.Validations
 
             RuleFor(x => x.Horario)
                 .NotEmpty()
+                .WithMessage("Não e possível fazer um agendamento sem uma data")
                 .Custom((Data, contexto) => {
                     if(Data < DateTime.Now)
                     {
@@ -63,7 +64,8 @@ namespace Infinite.Core.Business.CQRS.Agendamento.Validations
             });
 
             RuleFor(x => x.Pontos)
-                .NotEmpty();
+                .NotEmpty()
+                .WithMessage("O campo de pontos não pode ser nulo ou vazio");
 
         }
 

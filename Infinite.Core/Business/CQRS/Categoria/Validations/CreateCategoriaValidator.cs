@@ -16,6 +16,7 @@ namespace Infinite.Core.Business.CQRS.Categoria.Validations
         {
             RuleFor(x => x.Categoria)
                 .MaximumLength(50)
+                .WithMessage("O nome da categoria pode ter até no maxímo 50 caracteres")
                 .NotEmpty();
         }
 
