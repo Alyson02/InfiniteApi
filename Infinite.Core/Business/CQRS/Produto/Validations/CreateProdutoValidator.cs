@@ -13,7 +13,7 @@ namespace Infinite.Core.Business.CQRS.Produto.Validations
         public CreateProdutoValidator()
         {
             RuleFor(x => x.Fotos)
-                .Must(list => list.Count <= 3 && list.Count > 2 )
+                .Must(list => list.Count <= 4 && list.Count > 2 )
                 .WithMessage("Deve apenas 3 fotos");
 
             RuleFor(x => x.Capa)
