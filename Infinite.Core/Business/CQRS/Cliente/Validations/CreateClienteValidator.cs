@@ -38,6 +38,20 @@ namespace Infinite.Core.Business.CQRS.Cliente.Validations
                 .WithMessage("A senha pode ter no maximo 20 caracteres")
                 .NotEmpty()
                 .WithMessage("A senha é obrigatória");
+
+            RuleFor(x => x.Nome)
+                .MinimumLength(10)
+                .WithMessage("O nome tem que ter pelo menos 10 caracteres")
+                .MaximumLength(100)
+                .WithMessage("O nome tem que ter no maximo 100 caracteres");
+
+            RuleFor(x => x.Tell)
+                .MinimumLength(9)
+                .WithMessage("O telefone tem que ter pelo menos 9 caracteres")
+                .MaximumLength(100)
+                .WithMessage("O telefone tem que ter no maximo 14 caracteres");
+
+
         }
     }
 }
