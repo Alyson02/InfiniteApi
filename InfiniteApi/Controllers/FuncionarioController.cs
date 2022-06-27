@@ -1,5 +1,6 @@
 ﻿using Infinite.Core.Business.CQRS.Funcionario.Commands;
 using Infinite.Core.Business.CQRS.Funcionario.Queries;
+using Infinite.Core.Domain.Filter;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infinite.Api.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Master")]
@@ -18,13 +20,18 @@ namespace Infinite.Api.Controllers
 
         public FuncionarioController(IMediator mediator)
         {
+
             _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQueryAttribute] FuncionarioFilter filter)
         {
-            return Ok(await _mediator.Send(new GetAllFuncionarioQuery()));
+            var query = new GetAllFuncionarioQuery
+            {
+                filter = filter
+            };
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("{funcionarioId}")]

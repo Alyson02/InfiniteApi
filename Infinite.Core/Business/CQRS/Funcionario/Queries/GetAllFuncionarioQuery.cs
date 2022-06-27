@@ -11,11 +11,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Infinite.Core.Infrastructure.Repository;
+using Infinite.Core.Domain.Filter;
 
 namespace Infinite.Core.Business.CQRS.Funcionario.Queries
 {
     public class GetAllFuncionarioQuery : IRequest<Response>
     {
+        public FuncionarioFilter filter;
 
         public class GetAllFuncionarioQueryHandler : IRequestHandler<GetAllFuncionarioQuery, Response>
         {
@@ -29,7 +32,19 @@ namespace Infinite.Core.Business.CQRS.Funcionario.Queries
             {
                 try
                 {
-                    var spec = _service.CreateSpec().AddInclude(x => x.Usuario);
+                    var spec = new Specification<FuncionarioEntity>();
+
+                    if (!string.IsNullOrEmpty(query.filter.Nome))
+                    {
+                        spec = _service.CreateSpec(x => x.Nome.Contains(query.filter.Nome));
+                    }
+                    else
+                    {
+                        spec = _service.CreateSpec();
+                    }
+
+                    spec.AddInclude(x => x.Usuario);
+
                     var Funcionario = await this._service.ListAsync(spec);
 
                     var model = Funcionario.Select(x => new ListFuncionarioModel
