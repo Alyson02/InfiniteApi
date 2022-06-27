@@ -44,6 +44,8 @@ namespace Infinite.Core.Business.CQRS.Produto.Queries
                         Estoque = produto.Estoque,
                         Preco = produto.Preco,
                         UrlCapa = produto.Capa.Url,
+                        Categoria = produto.Categoria.Categoria,
+                        CategoriaId = produto.Categoria.CategoriaId,
                         UrlFotos = produto.Fotos.Select(x => x.Arquivo.Url).ToList()
                     };
 

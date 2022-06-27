@@ -53,38 +53,39 @@ namespace Infinite.Core.Business.CQRS.Produto.Commands
                         foreach (var foto in command.Fotos)
                         {
                             var temFoto = contador < produto.Fotos.Count ? produto.Fotos.ToList()[contador] : null;
-
-                            var upload = await FileUploadService.UploadFileAsync(foto.Base64, "infinite", foto.Tipo, temFoto == null ? "" : temFoto.Arquivo.Nome, temFoto != null);
-
-                            if(temFoto != null)
+                            if (!string.IsNullOrEmpty(foto.Base64))
                             {
-                                var arquivo = produto.Fotos.ToList()[contador].Arquivo;
-                                arquivo.Base64 = "";
-                                arquivo.Nome = upload.Nome;
-                                arquivo.Url = upload.Url;
-                                arquivo.Tamanho = upload.Tamanho;
-                                arquivo.Tipo = upload.Tipo;
-                            }
-                            else
-                            {
-                                produto.Fotos.Add(new FotoProdutoEntity
+                                var upload = await FileUploadService.UploadFileAsync(foto.Base64, "infinite", foto.Tipo, temFoto == null ? "" : temFoto.Arquivo.Nome, temFoto != null);
+
+                                if (temFoto != null)
                                 {
-                                    Arquivo= new ArquivoEntity
+                                    var arquivo = produto.Fotos.ToList()[contador].Arquivo;
+                                    arquivo.Base64 = "";
+                                    arquivo.Nome = upload.Nome;
+                                    arquivo.Url = upload.Url;
+                                    arquivo.Tamanho = upload.Tamanho;
+                                    arquivo.Tipo = upload.Tipo;
+                                }
+                                else
+                                {
+                                    produto.Fotos.Add(new FotoProdutoEntity
                                     {
-                                        Base64 = "",
-                                        Nome = upload.Nome,
-                                        Url = upload.Url,
-                                        Tamanho = upload.Tamanho,
-                                        Tipo = upload.Tipo,
-                                    }
-                                });
+                                        Arquivo = new ArquivoEntity
+                                        {
+                                            Base64 = "",
+                                            Nome = upload.Nome,
+                                            Url = upload.Url,
+                                            Tamanho = upload.Tamanho,
+                                            Tipo = upload.Tipo,
+                                        }
+                                    });
+                                }
                             }
-
                             contador++;
                         }
                     }
 
-                    if (produto.Capa is not null)
+                    if (produto.Capa is not null && !string.IsNullOrEmpty(command.Capa.Base64))
                     {
                         var uploadCapa = await FileUploadService.UploadFileAsync(command.Capa.Base64, "infinite", command.Capa.Tipo, produto.Capa?.Nome, produto.Capa != null);
 

@@ -34,6 +34,7 @@ namespace Infinite.Core.Business.CQRS.Funcionario.Queries
 
                     var model = Funcionario.Select(x => new ListFuncionarioModel
                     {
+                        FuncionarioId = x.FuncionarioId,
                         Nome = x.Nome,
                         Telefone = x.Telefone,
                         Email = x.Usuario.Email,

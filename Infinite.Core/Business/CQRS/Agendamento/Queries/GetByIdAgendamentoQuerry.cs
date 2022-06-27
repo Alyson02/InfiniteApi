@@ -28,7 +28,9 @@ namespace Infinite.Core.Business.CQRS.Agendamento.Queries//colocar o namespace c
             {
                 try
                 {
-                    var spec = this._service.CreateSpec(x => x.AgendamentoId == command.AgendamentoId);
+                    var spec = this._service.CreateSpec(x => x.AgendamentoId == command.AgendamentoId)
+                        .AddInclude(x => x.Jogo)
+                        .AddInclude(x => x.Cliente);
 
                     var Agendamento = await this._service.FindAsync(spec);
 
