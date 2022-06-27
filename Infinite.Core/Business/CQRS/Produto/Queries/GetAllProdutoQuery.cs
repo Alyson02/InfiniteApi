@@ -1,7 +1,9 @@
 ﻿using Infinite.Core.Business.Services.Base;
 using Infinite.Core.Domain.Entities;
+using Infinite.Core.Domain.Filter;
 using Infinite.Core.Domain.Models;
 using Infinite.Core.Infrastructure.Helper;
+using Infinite.Core.Infrastructure.Repository;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ namespace Infinite.Core.Business.CQRS.Produto.Queries
 {
     public class GetAllProdutoQuery : IRequest<Response>
     {
+        public ProdutoFilter filter;
         public class GetAllProdutoQueryHandler : IRequestHandler<GetAllProdutoQuery, Response>
         {
             private readonly IServiceBase<ProdutoEntity> _service;
@@ -31,8 +34,18 @@ namespace Infinite.Core.Business.CQRS.Produto.Queries
                 {
                     await _visitantesService.InsertAsync(new VisitantesEntity());
 
-                    var spec = _service.CreateSpec()
-                        .AddInclude(x => x.Categoria)
+                    var spec = new Specification<ProdutoEntity>();
+
+                    if (!string.IsNullOrEmpty(query.filter.Nome))
+                    {
+                        spec = _service.CreateSpec(x => x.Nome.Contains(query.filter.Nome));
+                    }
+                    else
+                    {
+                        spec = _service.CreateSpec();
+                    }
+                    
+                    spec.AddInclude(x => x.Categoria)
                         .AddInclude(x => x.Capa);
                     spec.ApplyOrderBy(x => x.Preco);
 

@@ -1,5 +1,6 @@
 ﻿using Infinite.Core.Business.CQRS.Produto.Commands;
 using Infinite.Core.Business.CQRS.Produto.Queries;
+using Infinite.Core.Domain.Filter;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,9 +24,13 @@ namespace Infinite.Api.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] ProdutoFilter filter)
         {
-            return Ok(await _mediator.Send(new GetAllProdutoQuery()));
+            var query = new GetAllProdutoQuery
+            {
+                filter = filter
+            };
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("{produtoId}")]
