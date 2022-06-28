@@ -1,6 +1,7 @@
 ﻿using Infinite.Core.Business.CQRS.Cliente.Commands;
 using Infinite.Core.Business.CQRS.Cliente.Queries;
 using Infinite.Core.Infrastructure.Extensions;
+using Infinite.Core.Domain.Filter;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -24,9 +25,14 @@ namespace Infinite.Api.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Master")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] ClienteFilter filter)
         {
-            return Ok(await _mediator.Send(new GetAllClienteQuerry()));
+            var query = new GetAllClienteQuerry
+            {
+                filter = filter
+            };
+
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("{idCliente}")]

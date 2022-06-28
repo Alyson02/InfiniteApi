@@ -11,12 +11,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Infinite.Core.Infrastructure.Repository;
+using Infinite.Core.Domain.Filter;
 
 namespace Infinite.Core.Business.CQRS.Cliente.Queries//colocar o namespace correto Ex.: .Produto.Commands
 {
     public class GetAllClienteQuerry : IRequest<Response>
     {
         
+        public ClienteFilter filter;
         public class GetAllClienteQuerryHandler : IRequestHandler<GetAllClienteQuerry, Response>
         {
             private readonly IServiceBase<ClienteEntity> _service;
@@ -24,12 +27,23 @@ namespace Infinite.Core.Business.CQRS.Cliente.Queries//colocar o namespace corre
             {
                 _service = service;
             }
-
-            public async Task<Response> Handle(GetAllClienteQuerry request, CancellationToken cancellationToken)
+            public async Task<Response> Handle(GetAllClienteQuerry query, CancellationToken cancellationToken)
             {
                 try
                 {
                     var spec = _service.CreateSpec().AddInclude(x => x.Usuario);
+
+                    if (!string.IsNullOrEmpty(query.filter.Nome))
+                    {
+                        spec = _service.CreateSpec(x => x.Nome.Contains(query.filter.Nome));
+                    }
+                    else
+                    {
+                        spec = _service.CreateSpec();
+                    }
+
+                    spec.AddInclude(x => x.Usuario);
+
                     var Cliente = await this._service.ListAsync(spec);
 
                     var model = Cliente.Select(x => new ListClienteModel

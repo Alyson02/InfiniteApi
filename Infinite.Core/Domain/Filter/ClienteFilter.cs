@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Infinite.Core.Domain.Filter
 {
-    internal class ClienteFilter
+    public class ClienteFilter
     {
         public string Nome { get; set; }
     }
