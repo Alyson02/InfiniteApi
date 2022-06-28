@@ -33,6 +33,13 @@ namespace Infinite.Api.Controllers
             return Ok(await _mediator.Send(query));
         }
 
+        [HttpGet("top4")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetTop4()
+        {
+            return Ok(await _mediator.Send(new GetTop4Query()));
+        }
+
         [HttpGet("{produtoId}")]
         [AllowAnonymous]
         public async Task<IActionResult> Get([FromRoute] int produtoId)
