@@ -7,13 +7,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Infinite.Core.Domain.Filter;
 using System.Threading;
 using System.Threading.Tasks;
+using Infinite.Core.Infrastructure.Repository;
 
 namespace Infinite.Core.Business.CQRS.Agendamento.Queries//colocar o namespace correto Ex.: .Produto.Commands
 {
     public class GetAllAgendamentoQuerry : IRequest<Response>
     {
+        public AgendamentoFilter filter;
+
 
         public class GetAllAgendamentoQuerryHandler : IRequestHandler<GetAllAgendamentoQuerry, Response>
         {
@@ -23,12 +27,23 @@ namespace Infinite.Core.Business.CQRS.Agendamento.Queries//colocar o namespace c
                 _service = service;
             }
 
-            public async Task<Response> Handle(GetAllAgendamentoQuerry request, CancellationToken cancellationToken)
+            public async Task<Response> Handle(GetAllAgendamentoQuerry query, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var spec = this._service.CreateSpec()
-                        .AddInclude(x => x.Jogo)
+
+                    var spec = new Specification<AgendamentoEntity>();
+
+                    if (0!=query.filter.AgendamentoId)
+                    {
+                        spec = this._service.CreateSpec(x => x.AgendamentoId == query.filter.AgendamentoId);
+                    }
+                    else
+                    {
+                        spec = _service.CreateSpec();
+                    }
+
+                    spec.AddInclude(x => x.Jogo)
                         .AddInclude(x => x.Cliente);
 
                     spec.ApplyOrderBy(x => x.Horario);

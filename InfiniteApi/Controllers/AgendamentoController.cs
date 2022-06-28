@@ -1,5 +1,6 @@
 ﻿using Infinite.Core.Business.CQRS.Agendamento.Commands;
 using Infinite.Core.Business.CQRS.Agendamento.Queries;
+using Infinite.Core.Domain.Filter;
 using Infinite.Core.Infrastructure.Extensions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -25,9 +26,13 @@ namespace Infinite.Api.Controllers
         // Bloco de consulta
         [HttpGet]
         [Authorize(Roles = "Master")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] AgendamentoFilter filter)
         {
-            return Ok(await _mediator.Send(new GetAllAgendamentoQuerry()));
+            var query = new GetAllAgendamentoQuerry
+            {
+                filter = filter
+            };
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("Usuario")]
