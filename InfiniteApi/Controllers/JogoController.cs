@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Infinite.Core.Domain.Filter;
 using System.Threading.Tasks;
 
 namespace Infinite.Api.Controllers
@@ -23,9 +24,13 @@ namespace Infinite.Api.Controllers
 
         // Bloco de consulta
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] JogoFilter filter)
         {
-            return Ok(await _mediator.Send(new GetAllJogoQuerry()));
+            var query = new GetAllJogoQuerry
+            {
+                filter = filter
+            };
+            return Ok(await _mediator.Send(query));
         }
         [HttpGet("{idJogo}")]
         public async Task<IActionResult> GetById([FromRoute] int idJogo)

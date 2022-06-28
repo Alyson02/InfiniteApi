@@ -11,11 +11,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Infinite.Core.Infrastructure.Repository;
+using Infinite.Core.Domain.Filter;
 
 namespace Infinite.Core.Business.CQRS.Jogo.Queries//colocar o namespace correto Ex.: .Produto.Commands
 {
     public class GetAllJogoQuerry : IRequest<Response>
     {
+        public JogoFilter filter;
 
         public class GetAllJogoQuerryHandler : IRequestHandler<GetAllJogoQuerry, Response>
         {
@@ -25,11 +28,22 @@ namespace Infinite.Core.Business.CQRS.Jogo.Queries//colocar o namespace correto 
                 _service = service;
             }
 
-            public async Task<Response> Handle(GetAllJogoQuerry request, CancellationToken cancellationToken)
+            public async Task<Response> Handle(GetAllJogoQuerry filter, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var Jogo = await this._service.ListAsync();
+                    var spec = new Specification<JogoEntity>();
+
+                    if (!string.IsNullOrEmpty(filter.filter.Nome))
+                    {
+                        spec = _service.CreateSpec(x => x.Nome.Contains(filter.filter.Nome));
+                    }
+                    else
+                    {
+                        spec = _service.CreateSpec();
+                    }
+
+                    var Jogo = await this._service.ListAsync(spec);
 
                     var model = Jogo.Select(x => new ListJogoModel
                     {
