@@ -22,7 +22,7 @@ namespace Infinite.Core.Business.Services.Token
             _configuration = configuration;
         }
 
-        public UsuarioToken GerarToken(UsuarioEntity user)
+        public UsuarioToken GerarToken(ClienteEntity cliente, UsuarioEntity user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["JWT:Key"]);
@@ -31,7 +31,7 @@ namespace Infinite.Core.Business.Services.Token
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Email.ToString()),
+                    new Claim(ClaimTypes.Name, cliente.Nome),
                     new Claim("uid", user.UserId.ToString()),
                     new Claim(ClaimTypes.Role, user.TipoUsuario.Role.ToString())
                 }),
@@ -45,6 +45,7 @@ namespace Infinite.Core.Business.Services.Token
                 Token = tokenHandler.WriteToken(token),
                 Expiracao = expiration,
                 Role = user.TipoUsuario.Role,
+                Nome = cliente.Nome,
             };
         }
     }

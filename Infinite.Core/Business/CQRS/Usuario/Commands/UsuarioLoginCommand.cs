@@ -23,11 +23,15 @@ namespace Infinite.Core.Business.CQRS.Usuario.Commands
         public class UsuarioLoginCommandHandler : IRequestHandler<UsuarioLoginCommand, Response>
         {
             private readonly IServiceBase<UsuarioEntity> _service;
+            private readonly IServiceBase<ClienteEntity> _clienteService;
             private readonly ITokenService _tokenService;
-            public UsuarioLoginCommandHandler(IServiceBase<UsuarioEntity> service, ITokenService tokenService)
+            public UsuarioLoginCommandHandler(IServiceBase<UsuarioEntity> service, 
+                                              ITokenService tokenService,
+                                              IServiceBase<ClienteEntity> clienteService)
             {
                 _service = service;
                 _tokenService = tokenService;
+                _clienteService = clienteService;
             }
 
             public async Task<Response> Handle(UsuarioLoginCommand command, CancellationToken cancellationToken)
@@ -40,9 +44,12 @@ namespace Infinite.Core.Business.CQRS.Usuario.Commands
                         .AddInclude(x => x.TipoUsuario);
                     var user = await _service.FindAsync(spec);
 
+                    var specCliente = _clienteService.CreateSpec(x => x.UsuarioId == user.UserId);
+                    var cliente = await _clienteService.FindAsync(specCliente);
+
                     if (user is null) throw new Exception("Email e/ou senha inválido(s)");
 
-                    var token = _tokenService.GerarToken(user);
+                    var token = _tokenService.GerarToken(cliente, user);
 
                     return new Response(token);
                 }

@@ -10,6 +10,6 @@ namespace Infinite.Core.Business.Services.Token
 {
     public interface ITokenService
     {
-        UsuarioToken GerarToken(UsuarioEntity userInfo);
+        UsuarioToken GerarToken(ClienteEntity clienteEntity, UsuarioEntity userInfo);
     }
 }
