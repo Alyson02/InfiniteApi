@@ -36,7 +36,7 @@ namespace Infinite.Core.Business.CQRS.Categoria.Commands
 
                     await _service.UpdateAsync(categoria);
 
-                    return new Response("Alguma coisa com sucesso");
+                    return new Response("Categoria coisa com sucesso");
                 }
                 catch (Exception e)
                 {

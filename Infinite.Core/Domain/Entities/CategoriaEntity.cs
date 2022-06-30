@@ -9,7 +9,7 @@ namespace Infinite.Core.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CategoriaId { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(250)]
         public string Categoria { get; set; }
 
     }

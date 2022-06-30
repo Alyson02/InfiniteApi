@@ -33,6 +33,8 @@ namespace Infinite.Core.Business.CQRS.Cliente.Queries//colocar o namespace corre
 
                     var cliente = await this._service.FindAsync(spec);
 
+                    
+
                     if (cliente == null) throw new Exception("Cliente não encontrado");
 
                     return new Response(cliente);

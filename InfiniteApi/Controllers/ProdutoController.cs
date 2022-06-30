@@ -33,6 +33,17 @@ namespace Infinite.Api.Controllers
             return Ok(await _mediator.Send(query));
         }
 
+        [HttpGet("Categoria")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAllCategoria([FromQuery] CategoriaProdutoFilter filter)
+        {
+            var query = new GetAllCategoriaProdutoQuery
+            {
+                filter = filter
+            };
+            return Ok(await _mediator.Send(query));
+        }
+
         [HttpGet("{produtoId}")]
         [AllowAnonymous]
         public async Task<IActionResult> Get([FromRoute] int produtoId)
