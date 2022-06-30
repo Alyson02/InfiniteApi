@@ -32,11 +32,13 @@ namespace Infinite.Core.Business.CQRS.Carrinho.Queries
                     var spec = _service.CreateSpec(x => x.Cliente.UsuarioId == query.UserId && x.Status == false);
                     spec.AddInclude(x => x.Cliente)
                         .AddInclude(x => x.Produtos)
-                        .AddInclude("Produtos.Produto");
+                        .AddInclude("Produtos.Produto")
+                        .AddInclude("Produtos.Produto.Capa");
 
-                    var produtos = await _service.ListAsync(spec);
+                    var produto = await _service.FindAsync(spec);
+                    var a = produto.Produtos;
 
-                    return new Response(produtos.Select(x => x.Produtos));
+                    return new Response(a);
                 }
                 catch (Exception e)
                 {

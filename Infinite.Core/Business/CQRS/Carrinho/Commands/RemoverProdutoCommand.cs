@@ -46,9 +46,7 @@ namespace Infinite.Core.Business.CQRS.Carrinho.Commands
 
                         if(produto != null)
                         {
-                            produto.Quantidade -= 1;
-
-                            await _service.UpdateAsync(produto);
+                            await _service.DeleteAsync(produto);
                             return new Response("Produto Removido com sucesso");
                         }
 

@@ -31,7 +31,8 @@ namespace Infinite.Core.Business.Services.Token
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, cliente.Nome),
+                    user.TipoUsuarioId == 2 ? new Claim(ClaimTypes.Name, cliente.Nome) :  
+                    new Claim(ClaimTypes.Name, "funcionario"),
                     new Claim("uid", user.UserId.ToString()),
                     new Claim(ClaimTypes.Role, user.TipoUsuario.Role.ToString())
                 }),
@@ -45,7 +46,7 @@ namespace Infinite.Core.Business.Services.Token
                 Token = tokenHandler.WriteToken(token),
                 Expiracao = expiration,
                 Role = user.TipoUsuario.Role,
-                Nome = cliente.Nome,
+                Nome = user.TipoUsuarioId == 2 ? cliente.Nome : "Funcionario"
             };
         }
     }

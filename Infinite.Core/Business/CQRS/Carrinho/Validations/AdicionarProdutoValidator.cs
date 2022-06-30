@@ -12,9 +12,9 @@ namespace Infinite.Core.Business.CQRS.Carrinho.Validations
     {
         public AdicionarProdutoValidator()
         {
-            RuleFor(x => x.Quantidade)
-                .GreaterThanOrEqualTo(0)
-                .WithMessage("Não é possivel adicionar ao carrinho o produto com quantidade 0");
+            //RuleFor(x => x.Quantidade)
+            //    .GreaterThanOrEqualTo(0)
+            //    .WithMessage("Não é possivel adicionar ao carrinho o produto com quantidade 0");
         }
     }
 }
