@@ -36,7 +36,7 @@ namespace Infinite.Core.Business.CQRS.Carrinho.Queries
                         .AddInclude("Produtos.Produto.Capa");
 
                     var produto = await _service.FindAsync(spec);
-                    var a = produto.Produtos;
+                    var a = produto?.Produtos;
 
                     return new Response(a);
                 }
